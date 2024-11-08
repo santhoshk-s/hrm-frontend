@@ -11,7 +11,7 @@ const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
 const navigate=useNavigate()
-  const { loading, error } = useSelector((state) => state.auth);
+  const {data, loading, error } = useSelector((state) => state.auth.loginUser);
 
   // Validate form fields
   const validateForm = () => {
@@ -29,7 +29,7 @@ const navigate=useNavigate()
       return;
     }
 
-    dispatch(loginUser({ email, password })).then(()=>{
+    dispatch(loginUser({ email, password })).unwrap().then(()=>{
       navigate("/")
     })
   };
@@ -80,15 +80,16 @@ const navigate=useNavigate()
               <div className="p-6 pt-0">
                 <button
                   type="submit"
-                  disabled={loading}
+                  // disabled={loading}
                   className="block w-full rounded-lg bg-gradient-to-tr from-cyan-600 to-cyan-400 py-3 text-xs font-bold uppercase text-white shadow-md hover:shadow-lg active:opacity-85"
                 >
-                  {loading ? "Signing in..." : "Sign In"}
+                  {/* {loading ? "Signing in..." : "Sign In"} */}
+                  sign in
                 </button>
                 {errorMessage && (
                   <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
                 )}
-                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                {/* {error && <p className="text-red-500 text-sm mt-2">{error}</p>} */}
               </div>
               <p className="mb-4 flex justify-center text-sm font-light text-gray-700">
                 Don't have an account?
