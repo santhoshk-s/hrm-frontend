@@ -1,13 +1,18 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { BASE_URL } from '../../constant';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import { BASE_URL } from "../../constant";
+import api from "../../api";
 
-// Thunk for logging in a user
+// Thunk for logging in a data
 export const loginUser = createAsyncThunk(
-  'auth/loginUser',
+  "auth/loginUser",
   async (userCredentials, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/api/auth/login`, userCredentials); 
+      const response = await api.post(
+        `${BASE_URL}/api/auth/login`,
+        userCredentials
+      );
+      localStorage.setItem('token', response.data.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -15,12 +20,15 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-// Thunk for registering a user
+// Thunk for registering a data
 export const registerUser = createAsyncThunk(
-  'auth/registerUser',
+  "auth/registerUser",
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/api/auth/Register`, userData); 
+      const response = await api.post(
+        `${BASE_URL}/api/auth/Register`,
+        userData
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -29,53 +37,46 @@ export const registerUser = createAsyncThunk(
 );
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: {
-    user: null,
-    token: null,
+    data: null,
     loading: false,
     error: null,
+    loginUser: { data: null,loading: false,error: null },
+    logout: { data: null,loading: false,error: null },
   },
-  reducers: {
-    logout: (state) => {
-      state.user = null;
-      state.token = null;
-      state.error = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       // Login cases
       .addCase(loginUser.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+        state.loginUser.loading = true;
+        state.loginUser.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload.user; // Adjust based on API response
-        state.token = action.payload.token;
+        state.loginUser.loading = false;
+        state.loginUser.data = action.payload.data;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
+        state.loginUser.loading = false;
+        state.loginUser.error = action.payload;
       })
-      
+
       // Register cases
       .addCase(registerUser.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+        state.registerUser.loading = true;
+        state.registerUser.error = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload.user; // Adjust based on API response
-        state.token = action.payload.token;
+        state.registerUser.loading = false;
+        state.registerUser.data = action.payload.data;
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
+        state.registerUser.loading = false;
+        state.registerUser.error = action.payload;
       });
   },
 });
 
-export const { logout } = authSlice.actions;
+// export const { logout } = authSlice.actions;
 export default authSlice.reducer;
