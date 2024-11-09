@@ -11,6 +11,8 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import ShowAttendance from "./pages/admin/ShowAttendance";
 import ShowEmployees from "./pages/admin/ShowEmployees";
+import InterviewList from "./pages/admin/InterviewList";
+
 
 function App() {
   const location = useLocation();
@@ -30,6 +32,7 @@ function App() {
           <Route index element={<Navigate to="/attendance" />} />
           <Route path="/attendance" element={<ShowAttendance />} />
           <Route path="/showemployees" element={<ShowEmployees />} />
+          <Route path="/interviewlist" element={<InterviewList/>}/>
         </Route>
       </Routes>
     </>

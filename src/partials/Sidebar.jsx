@@ -3,6 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { LuCalendarCheck } from "react-icons/lu";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 import { PiUsersThreeBold } from "react-icons/pi";
+import { FaListUl } from "react-icons/fa";
 
 function Sidebar({
   sidebarOpen,
@@ -135,6 +136,26 @@ function Sidebar({
                       <PiUsersThreeBold className={` text-xl ${pathname.includes('showemployees') ? 'text-violet-500' : 'text-gray-400 dark:text-gray-500'}`} />
                       <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                         All Employees
+                      </span>
+                    </div>
+                  </div>
+                </NavLink>
+              </li>
+
+          {/* interviewlist */}
+
+          <li className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("interviewlist") && "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"}`}>
+                <NavLink
+                  end
+                  to="/interviewlist"
+                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("interviewlist") ? "" : "hover:text-gray-900 dark:hover:text-white"
+                    }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="grow flex items-center">
+                      <FaListUl className={` text-xl ${pathname.includes('interviewlist') ? 'text-violet-500' : 'text-gray-400 dark:text-gray-500'}`} />
+                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        InterView List
                       </span>
                     </div>
                   </div>
