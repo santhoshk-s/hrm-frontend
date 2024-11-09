@@ -4,15 +4,17 @@ import {
   Route,
   useLocation
 } from 'react-router-dom';
-
 import './css/style.css';
-
 import './charts/ChartjsConfig';
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-quartz.css";
 
 // Import pages
 import Dashboard from './pages/Dashboard';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
+import ShowAttendance from './pages/admin/ShowAttendance';
+import ShowEmployees from './pages/admin/ShowEmployees';
 
 function App() {
 
@@ -29,7 +31,10 @@ function App() {
       <Routes>
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/register" element={<RegisterPage />} />
-        <Route exact path="/" element={<Dashboard />} />
+        <Route element={<Dashboard />} >
+          <Route index path="/" element={<ShowAttendance />} />
+          <Route index path="/showemployees" element={<ShowEmployees />} />
+        </Route>
       </Routes>
     </>
   );
