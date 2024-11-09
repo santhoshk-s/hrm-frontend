@@ -5,6 +5,8 @@ import "./charts/ChartjsConfig";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 
+
+
 // Import pages
 import Dashboard from "./pages/Dashboard";
 import RegisterPage from "./pages/RegisterPage";
@@ -13,6 +15,8 @@ import ShowAttendance from "./pages/admin/ShowAttendance";
 import ShowEmployees from "./pages/admin/ShowEmployees";
 import InterviewList from "./pages/admin/InterviewList";
 
+import LeaveList from "./pages/admin/LeaveList";
+import LeaveForm from "./pages/employee/LeaveForm";
 
 function App() {
   const location = useLocation();
@@ -33,6 +37,8 @@ function App() {
           <Route path="/attendance" element={<ShowAttendance />} />
           <Route path="/showemployees" element={<ShowEmployees />} />
           <Route path="/interviewlist" element={<InterviewList/>}/>
+          <Route path="/leavelist" element={<LeaveList/>}/>
+          <Route path="/leaveform" element={<LeaveForm/>}/>
         </Route>
       </Routes>
     </>
