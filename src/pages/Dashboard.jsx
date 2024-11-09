@@ -69,7 +69,7 @@ function Dashboard() {
               <DashboardCard13 />     
             </div>
           </div> */}
-          <div className='className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto"'><Outlet/></div>
+          <div className="px-4 mb-10 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto"><Outlet/></div>
         </main>
         {/* <Banner /> */}
       </div>
