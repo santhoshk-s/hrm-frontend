@@ -17,6 +17,8 @@ import InterviewList from "./pages/admin/InterviewList";
 
 import LeaveList from "./pages/admin/LeaveList";
 import LeaveForm from "./pages/employee/LeaveForm";
+import AddAttendance from "./pages/AddAttendance";
+
 
 function App() {
   const location = useLocation();
@@ -39,6 +41,8 @@ function App() {
           <Route path="/interviewlist" element={<InterviewList/>}/>
           <Route path="/leavelist" element={<LeaveList/>}/>
           <Route path="/leaveform" element={<LeaveForm/>}/>
+          <Route path="/addattendance" element={<AddAttendance/>}/>
+        
         </Route>
       </Routes>
     </>

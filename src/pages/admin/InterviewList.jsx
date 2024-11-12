@@ -245,13 +245,13 @@ const CandidateTable = () => {
               <td className="p-3">{candidate.experience}</td>
               <td className="p-3">{candidate.skills}</td>
               <td className="p-3">
-                {candidate.resumeLink ? candidate.resumeLink : 'No Resume Uploaded'}
+                <button className="bg-orange-300 border rounded px-2 py-1">Download</button>
               </td>
               <td className="p-3">
                 <select
                   value={candidate.status}
                   onChange={(e) => handleStatusChange(candidate.id, e.target.value)}
-                  className="bg-green-200 border  rounded px-2 py-1"
+                  className="bg-green-200 hover:to-blue-500 border rounded px-2 py-1 cursor-pointer"
                 >
                   <option value="Pending">Pending</option>
                   <option value="Hired">Hired</option>
