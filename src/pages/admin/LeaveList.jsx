@@ -31,7 +31,7 @@ function LeaveList() {
           onClick={()=>alert("rty")}
         />
       ),
-      width:200
+      width:250
     }
   ]);
 
