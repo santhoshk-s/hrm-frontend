@@ -18,6 +18,9 @@ import InterviewList from "./pages/admin/InterviewList";
 import LeaveList from "./pages/admin/LeaveList";
 import LeaveForm from "./pages/employee/LeaveForm";
 import AddAttendance from "./pages/AddAttendance";
+import Profile from "./pages/Profile";
+import Employeequery from "./pages/employee/Employeequery";
+import Querylist from "./pages/employee/Querylist";
 
 
 function App() {
@@ -43,6 +46,10 @@ function App() {
           <Route path="/leaveform" element={<LeaveForm/>}/>
           <Route path="/addattendance" element={<AddAttendance/>}/>
         
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/employeequery" element={<Employeequery />} />
+          <Route path="/querylist" element={<Querylist />} />
+
         </Route>
       </Routes>
     </>

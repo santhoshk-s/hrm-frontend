@@ -7,6 +7,9 @@ import { FaListUl } from "react-icons/fa";
 import { FaRegCalendarXmark } from "react-icons/fa6";
 import { FaWpforms } from "react-icons/fa6";
 import { PiCameraPlusBold } from "react-icons/pi";
+import { CgProfile } from "react-icons/cg";
+import { PiUserSoundBold } from "react-icons/pi";
+import { PiUserListFill } from "react-icons/pi";
 
 
 function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
@@ -62,9 +65,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
     <div className="min-w-fit">
       {/* Sidebar backdrop (mobile only) */}
       <div
-        className={`fixed inset-0 bg-gray-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
-          sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 bg-gray-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         aria-hidden="true"
       ></div>
 
@@ -72,13 +74,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
       <div
         id="sidebar"
         ref={sidebar}
-        className={`flex lg:!flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-white dark:bg-gray-800 p-4 transition-all duration-200 ease-in-out ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-64"
-        } ${
-          variant === "v2"
+        className={`flex lg:!flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-white dark:bg-gray-800 p-4 transition-all duration-200 ease-in-out ${sidebarOpen ? "translate-x-0" : "-translate-x-64"
+          } ${variant === "v2"
             ? "border-r border-gray-200 dark:border-gray-700/60"
             : "rounded-r-2xl shadow-sm"
-        }`}
+          }`}
       >
         {/* Sidebar header */}
         <div className="flex justify-between mb-10 pr-3 sm:px-2">
@@ -130,28 +130,25 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
             <ul className="mt-3">
               {/* attendance list */}
               <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-                  pathname.includes("attendance") &&
+                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("attendance") &&
                   "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                }`}
+                  }`}
               >
                 <NavLink
                   end
                   to="/attendance"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-                    pathname.includes("attendance")
-                      ? ""
-                      : "hover:text-gray-900 dark:hover:text-white"
-                  }`}
+                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("attendance")
+                    ? ""
+                    : "hover:text-gray-900 dark:hover:text-white"
+                    }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="grow flex items-center">
                       <LuCalendarCheck
-                        className={`text-xl ${
-                          pathname.includes("attendance")
-                            ? "text-violet-500"
-                            : "text-gray-400 dark:text-gray-500"
-                        }`}
+                        className={`text-xl ${pathname.includes("attendance")
+                          ? "text-violet-500"
+                          : "text-gray-400 dark:text-gray-500"
+                          }`}
                       />
                       <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                         Attendance
@@ -166,28 +163,25 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
               </li>
               {/* Employees list */}
               <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-                  pathname.includes("showemployees") &&
+                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("showemployees") &&
                   "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                }`}
+                  }`}
               >
                 <NavLink
                   end
                   to="/showemployees"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-                    pathname.includes("showemployees")
-                      ? ""
-                      : "hover:text-gray-900 dark:hover:text-white"
-                  }`}
+                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("showemployees")
+                    ? ""
+                    : "hover:text-gray-900 dark:hover:text-white"
+                    }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="grow flex items-center">
                       <PiUsersThreeBold
-                        className={` text-xl ${
-                          pathname.includes("showemployees")
-                            ? "text-violet-500"
-                            : "text-gray-400 dark:text-gray-500"
-                        }`}
+                        className={` text-xl ${pathname.includes("showemployees")
+                          ? "text-violet-500"
+                          : "text-gray-400 dark:text-gray-500"
+                          }`}
                       />
                       <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                         All Employees
@@ -200,28 +194,25 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
               {/* interviewlist */}
 
               <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-                  pathname.includes("interviewlist") &&
+                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("interviewlist") &&
                   "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                }`}
+                  }`}
               >
                 <NavLink
                   end
                   to="/interviewlist"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-                    pathname.includes("interviewlist")
-                      ? ""
-                      : "hover:text-gray-900 dark:hover:text-white"
-                  }`}
+                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("interviewlist")
+                    ? ""
+                    : "hover:text-gray-900 dark:hover:text-white"
+                    }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="grow flex items-center">
                       <FaListUl
-                        className={` text-xl ${
-                          pathname.includes("interviewlist")
-                            ? "text-violet-500"
-                            : "text-gray-400 dark:text-gray-500"
-                        }`}
+                        className={` text-xl ${pathname.includes("interviewlist")
+                          ? "text-violet-500"
+                          : "text-gray-400 dark:text-gray-500"
+                          }`}
                       />
                       <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                         Interview List
@@ -234,28 +225,25 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
               {/* leavelist */}
 
               <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-                  pathname.includes("leavelist") &&
+                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("leavelist") &&
                   "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                }`}
+                  }`}
               >
                 <NavLink
                   end
                   to="/leavelist"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-                    pathname.includes("leavelist")
-                      ? ""
-                      : "hover:text-gray-900 dark:hover:text-white"
-                  }`}
+                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("leavelist")
+                    ? ""
+                    : "hover:text-gray-900 dark:hover:text-white"
+                    }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="grow flex items-center">
                       <FaRegCalendarXmark
-                        className={` text-xl ${
-                          pathname.includes("leavelist")
-                            ? "text-violet-500"
-                            : "text-gray-400 dark:text-gray-500"
-                        }`}
+                        className={` text-xl ${pathname.includes("leavelist")
+                          ? "text-violet-500"
+                          : "text-gray-400 dark:text-gray-500"
+                          }`}
                       />
                       <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                         Leave List
@@ -268,28 +256,25 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
               {/* leave form */}
 
               <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-                  pathname.includes("leaveform") &&
+                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("leaveform") &&
                   "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                }`}
+                  }`}
               >
                 <NavLink
                   end
                   to="/leaveform"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-                    pathname.includes("leaveform")
-                      ? ""
-                      : "hover:text-gray-900 dark:hover:text-white"
-                  }`}
+                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("leaveform")
+                    ? ""
+                    : "hover:text-gray-900 dark:hover:text-white"
+                    }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="grow flex items-center">
                       <FaWpforms
-                        className={` text-xl ${
-                          pathname.includes("leaveform")
-                            ? "text-violet-500"
-                            : "text-gray-400 dark:text-gray-500"
-                        }`}
+                        className={` text-xl ${pathname.includes("leaveform")
+                          ? "text-violet-500"
+                          : "text-gray-400 dark:text-gray-500"
+                          }`}
                       />
                       <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                         Leave Form
@@ -300,31 +285,93 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
               </li>
 
 
-               {/*Selfi Attendances*/}
 
-               <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
-                  pathname.includes("leaveform") &&
+
+              {/* employeequey */}
+
+
+              <li
+                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("employeequery") &&
                   "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                }`}
+                  }`}
+              >
+                <NavLink
+                  end
+                  to="/employeequery"
+                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("employeequery")
+                    ? ""
+                    : "hover:text-gray-900 dark:hover:text-white"
+                    }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="grow flex items-center">
+                      <PiUserSoundBold
+                        className={` text-xl ${pathname.includes("employeequery")
+                          ? "text-violet-500"
+                          : "text-gray-400 dark:text-gray-500"
+                          }`}
+                      />
+                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        Employee Query
+                      </span>
+                    </div>
+                  </div>
+                </NavLink>
+              </li>
+
+              {/* query list */}
+
+              <li
+                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("querylist") &&
+                  "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+                  }`}
+              >
+                <NavLink
+                  end
+                  to="/querylist"
+                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("querylist")
+                    ? ""
+                    : "hover:text-gray-900 dark:hover:text-white"
+                    }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="grow flex items-center">
+                      <PiUserListFill
+                        className={` text-xl ${pathname.includes("querylist")
+                          ? "text-violet-500"
+                          : "text-gray-400 dark:text-gray-500"
+                          }`}
+                      />
+                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        Query List
+                      </span>
+                    </div>
+                  </div>
+                </NavLink>
+              </li>
+
+              {/*Selfi Attendances*/}
+
+              <li
+                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("leaveform") &&
+                  "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+                  }`}
               >
                 <NavLink
                   end
                   to="/addattendance"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-                    pathname.includes("leaveform")
-                      ? ""
-                      : "hover:text-gray-900 dark:hover:text-white"
-                  }`}
+                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("leaveform")
+                    ? ""
+                    : "hover:text-gray-900 dark:hover:text-white"
+                    }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="grow flex items-center">
                       <PiCameraPlusBold
-                        className={` text-xl ${
-                          pathname.includes("leaveform")
-                            ? "text-violet-500"
-                            : "text-gray-400 dark:text-gray-500"
-                        }`}
+                        className={` text-xl ${pathname.includes("leaveform")
+                          ? "text-violet-500"
+                          : "text-gray-400 dark:text-gray-500"
+                          }`}
                       />
                       <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                         Add-Attendance</span>
@@ -332,6 +379,43 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
                   </div>
                 </NavLink>
               </li>
+              {/* profile */}
+
+              <li
+                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("profile") &&
+                  "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+                  }`}
+              >
+                <NavLink
+                  end
+                  to="/profile"
+                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("profile")
+                    ? ""
+                    : "hover:text-gray-900 dark:hover:text-white"
+                    }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="grow flex items-center">
+                      <CgProfile
+                        className={` text-xl ${pathname.includes("profile")
+                          ? "text-violet-500"
+                          : "text-gray-400 dark:text-gray-500"
+                          }`}
+                      />
+                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        Profile
+                      </span>
+                    </div>
+                  </div>
+                </NavLink>
+              </li>
+
+
+
+
+
+
+
 
               {/* Dashboard */}
 
