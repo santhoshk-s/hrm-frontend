@@ -9,7 +9,7 @@ export const loginUser = createAsyncThunk(
   async (userCredentials, { rejectWithValue }) => {
     try {
       const response = await api.post(
-        `${BASE_URL}/api/auth/login`,
+        `${BASE_URL}/auth/login`,
         userCredentials
       );
       localStorage.setItem('token', response.data.data);
@@ -26,7 +26,7 @@ export const registerUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await api.post(
-        `${BASE_URL}/api/auth/Register`,
+        `${BASE_URL}/auth/Register`,
         userData
       );
       return response.data;

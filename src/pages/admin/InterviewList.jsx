@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
+import { useDispatch, useSelector } from "react-redux";
+import { addInterview } from '../../redux/slices/interview';
+
+
 
 const initialCandidates = [
   {
@@ -31,14 +35,21 @@ const initialCandidates = [
   },
 ];
 
+
+
 const CandidateTable = () => {
+  const dispatch=useDispatch()
+  const {data:addData,error:addError,loading:addLoading}=useSelector((state)=>state.interview.addInterview)
   const [candidates, setCandidates] = useState(initialCandidates);
   const [formData, setFormData] = useState({
-    name: '',
+    candidateName: '',
+    candidateEmail:'',
+    mobile:null,
     position: '',
     experience: '',
+    date:'',
     skills: '',
-    resumeFile: null,
+    resume: null,
     status: 'Pending',
   });
   const [isEditing, setIsEditing] = useState(false);
@@ -60,7 +71,7 @@ const CandidateTable = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData({ ...formData, resumeFile: file });
+      setFormData({ ...formData, resume: file });
     }
   };
 
@@ -68,7 +79,7 @@ const CandidateTable = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const resumeLink = formData.resumeFile ? formData.resumeFile.name : '';
+    const resumeLink = formData.resume ? formData.resume.name : '';
 
     if (isEditing) {
       setCandidates((prevCandidates) =>
@@ -79,6 +90,7 @@ const CandidateTable = () => {
       setIsEditing(false);
       setEditId(null);
     } else {
+      dispatch(addInterview({formData}))
       const newCandidate = {
         id: candidates.length + 1,
         ...formData,
@@ -89,12 +101,15 @@ const CandidateTable = () => {
 
     // Reset form data and close modal
     setFormData({
-      name: '',
-      position: '',
-      experience: '',
-      skills: '',
-      resumeFile: null,
-      status: 'Pending',
+      candidateName: '',
+   position: '',
+    experience: '',
+    candidateEmail:'',
+    mobile:null,
+    date:'',
+    skills: '',
+    resume: null,
+    status: 'Pending',
     });
     toggleModal();
   };
@@ -103,7 +118,7 @@ const CandidateTable = () => {
   const handleEdit = (candidate) => {
     setFormData({
       ...candidate,
-      resumeFile: null,
+      resume: null,
     });
     setIsEditing(true);
     setEditId(candidate.id);
@@ -123,6 +138,7 @@ const CandidateTable = () => {
       )
     );
   };
+console.log(addData,addError)
 
   return (
     <div className="m-5">
@@ -130,12 +146,15 @@ const CandidateTable = () => {
       <button
         onClick={() => {
           setFormData({
-            name: '',
+            candidateName: '',
             position: '',
-            experience: '',
-            skills: '',
-            resumeFile: null,
-            status: 'Pending',
+             experience: '',
+             candidateEmail:'',
+             mobile:null,
+             date:'',
+             skills: '',
+             resume: null,
+             status: 'Pending',
           });
           setIsEditing(false);
           toggleModal();
@@ -147,16 +166,17 @@ const CandidateTable = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center  bg-black bg-opacity-50 z-10">
-          <form className="bg-white rounded-lg shadow-lg p-6  w-1/2">
+        <div className="fixed inset-0 flex  items-center justify-center  bg-black bg-opacity-50 z-10">
+          
+          <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-6  w-1/2">
             <h2 className="text-lg font-semibold mb-4">{isEditing ? 'Edit Candidate' : 'Add Candidate'}</h2>
-            <div onSubmit={handleSubmit} className="grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block mb-1 font-medium items-center">Candidate Name</label>
                 <input
                   type="text"
-                  name="name"
-                  value={formData.name}
+                  name="candidateName"
+                  value={formData.candidateName}
                   onChange={handleInputChange}
                   className="w-full border rounded px-3 py-2"
                   required
@@ -184,6 +204,7 @@ const CandidateTable = () => {
                   required
                 />
               </div>
+              
               <div>
                 <label className="block mb-1 font-medium">Skills</label>
                 <input
@@ -195,11 +216,45 @@ const CandidateTable = () => {
                   required
                 />
               </div>
+
+              <div>
+                <label className="block mb-1 font-medium">candidateEmail</label>
+                <input
+                  type="email"
+                  name="candidateEmail"
+                  value={formData.candidateEmail}
+                  onChange={handleInputChange}
+                  className="w-full border rounded px-3 py-2"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block mb-1 font-medium">Mobile</label>
+                <input
+                  type="number"
+                  name="mobile"
+                  value={formData.mobile}
+                  onChange={handleInputChange}
+                  className="w-full border rounded px-3 py-2"
+                  required
+                />
+              </div>
               <div>
                 <label className="block mb-1 font-medium">Resume Upload</label>
                 <input
                   type="file"
                   onChange={handleFileChange}
+                  className="w-full border rounded px-3 py-2"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block mb-1 font-medium">Date</label>
+                <input
+                  type="Date"
+                  name="date"
+                  value={formData.date}
+                  onChange={handleInputChange}
                   className="w-full border rounded px-3 py-2"
                   required
                 />
