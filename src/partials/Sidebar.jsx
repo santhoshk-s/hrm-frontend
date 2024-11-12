@@ -6,6 +6,7 @@ import { PiUsersThreeBold } from "react-icons/pi";
 import { FaListUl } from "react-icons/fa";
 import { FaRegCalendarXmark } from "react-icons/fa6";
 import { FaWpforms } from "react-icons/fa6";
+import { PiCameraPlusBold } from "react-icons/pi";
 
 
 function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
@@ -293,6 +294,40 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
                       <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                         Leave Form
                       </span>
+                    </div>
+                  </div>
+                </NavLink>
+              </li>
+
+
+               {/*Selfi Attendances*/}
+
+               <li
+                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
+                  pathname.includes("leaveform") &&
+                  "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+                }`}
+              >
+                <NavLink
+                  end
+                  to="/addattendance"
+                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
+                    pathname.includes("leaveform")
+                      ? ""
+                      : "hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="grow flex items-center">
+                      <PiCameraPlusBold
+                        className={` text-xl ${
+                          pathname.includes("leaveform")
+                            ? "text-violet-500"
+                            : "text-gray-400 dark:text-gray-500"
+                        }`}
+                      />
+                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        Add-Attendance</span>
                     </div>
                   </div>
                 </NavLink>

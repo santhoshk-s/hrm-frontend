@@ -1,0 +1,109 @@
+import React, { useState, useRef } from 'react';
+import Webcam from 'react-webcam';
+
+const AttendanceSystem = () => {
+    const webcamRef = useRef(null);
+    const [attendanceRecord, setAttendanceRecord] = useState(null);
+    const [isCameraOpen, setIsCameraOpen] = useState(false);
+
+    // Open camera view
+    const openCamera = () => {
+        setIsCameraOpen(true);
+    };
+
+    // Close camera view
+    const closeCamera = () => {
+        setIsCameraOpen(false);
+    };
+
+    // Capture image
+    const captureImage = () => {
+        const imageSrc = webcamRef.current.getScreenshot();
+        if (imageSrc) {
+            const newRecord = {
+                id: Date.now(),
+                image: imageSrc,
+                timestamp: new Date().toISOString(),
+                verified: false,
+            };
+            setAttendanceRecord(newRecord);
+            setIsCameraOpen(false);
+        }
+    };
+
+    // Remove the image
+    const removeImage = () => {
+        setAttendanceRecord(null);
+    };
+
+    // Retake an image by reopening the camera
+    const retakeImage = () => {
+        openCamera();
+    };
+
+    return (
+        <div className="p-8">
+            <h2 className="text-2xl font-bold text-center mb-6 font-serif">Selfie-Based Attendance System</h2>
+
+            {/* Button to open camera */}
+            <button
+                onClick={openCamera}
+                className="bg-blue-500 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded mb-4"
+            >
+                📸 Take Selfie
+            </button>
+
+            {/* Camera view with "Take Shot" and "Cancel" buttons */}
+            {isCameraOpen && (
+                <div className="flex flex-col items-center mb-6">
+                    <Webcam
+                        audio={false}
+                        ref={webcamRef}
+                        screenshotFormat="image/jpeg"
+                        className="border border-gray-300 rounded-lg mb-4 w-80"
+                    />
+                    <div className="flex space-x-4">
+                        <button
+                            onClick={captureImage}
+                            className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
+                        >
+                            Take Shot
+                        </button>
+                        <button
+                            onClick={closeCamera}
+                            className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Display selfie with "Remove" and "Retake" options */}
+            {attendanceRecord && (
+                <div className="mt-8 flex flex-col items-center bg-gray-100 p-4 rounded-lg shadow-md">
+                    <img src={attendanceRecord.image} alt="Selfie" className="w-30 h-30 mb-2" />
+                    <h3 className="text-lg font-semibold text-gray-700">
+                        Arrival Time: {new Date(attendanceRecord.timestamp).toLocaleString()}
+                    </h3>
+                    <div className="flex space-x-4 mt-2">
+                        <button
+                            onClick={removeImage}
+                            className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded"
+                        >
+                            Remove
+                        </button>
+                        <button
+                            onClick={retakeImage}
+                            className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-1 px-3 rounded"
+                        >
+                            Retake
+                        </button>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default AttendanceSystem;
