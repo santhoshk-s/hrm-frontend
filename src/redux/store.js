@@ -1,13 +1,9 @@
-// redux/store.js
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './slices/authSlice';
-import interviewReducer from './slices/interview';
-
+import attendanceReducer from './attendanceSlice';
 
 const store = configureStore({
   reducer: {
-    auth: authReducer,
-    interview:interviewReducer,
+    attendance: attendanceReducer,
   },
 });
 

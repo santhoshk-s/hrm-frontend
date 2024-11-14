@@ -677,6 +677,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
         </div>
       </div>
     </div>
+
   );
 }
 
