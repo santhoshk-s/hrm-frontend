@@ -22,7 +22,10 @@ import Profile from "./pages/Profile";
 import Employeequery from "./pages/employee/Employeequery";
 import Querylist from "./pages/employee/Querylist";
 import { Provider } from 'react-redux';
-import store from './store'; // Import your Redux store
+import store from './redux/store'; // Import your Redux store
+import AuditLog from "./pages/admin/AuditLog";
+
+
 
 
 function App() {
@@ -52,6 +55,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/employeequery" element={<Employeequery />} />
           <Route path="/querylist" element={<Querylist />} />
+          <Route path="/auditlog" element={<AuditLog />} />
 
         </Route>
       </Routes>

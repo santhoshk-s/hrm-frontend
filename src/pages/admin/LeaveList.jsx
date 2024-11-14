@@ -8,14 +8,12 @@ function LeaveList() {
       email: "A6",
       date: 76543,
       reason: 76543,
-     
     },
     {
       Name: "Chevrolet",
       email: "Malibu",
       date: 65432,
       reason: 65432,
-     
     },
   ]);
 
@@ -26,13 +24,9 @@ function LeaveList() {
     { field: "reason", headerName: " Reason" },
     {
       headerName: "Action",
-      cellRenderer: (params) => (
-        <ButtonRenderer
-          onClick={()=>alert("rty")}
-        />
-      ),
-      width:250
-    }
+      cellRenderer: (params) => <ButtonRenderer onClick={() => alert("rty")} />,
+      width: 250,
+    },
   ]);
 
   return (
@@ -44,23 +38,22 @@ function LeaveList() {
         rowData={rowData}
         columnDefs={colDefs}
         pagination={true}
-        paginationPageSize={15}
+        paginationPageSize={20}
         className="bg-white dark:bg-gray-800 shadow-sm rounded-xl"
-        
       />
     </div>
   );
 }
 const ButtonRenderer = ({ onClick }) => {
   return (
-   <>
+    <>
       <button className="btn bg-green-800 text-white" onClick={onClick}>
         Approve
       </button>
       <button className="btn bg-red-800 ml-2" onClick={onClick}>
         Rejected
       </button>
-   </>
+    </>
   );
 };
 export default LeaveList;
