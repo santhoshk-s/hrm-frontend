@@ -40,7 +40,7 @@ const CandidateTable = () => {
   const [formData, setFormData] = useState({
     candidateName: '',
     candidateEmail: '',
-    mobile: null,
+    mobile: '',
     position: '',
     experience: '',
     date: '',

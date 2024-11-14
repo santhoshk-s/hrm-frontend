@@ -47,7 +47,7 @@ function ShowAttendance() {
         rowData={rowData}
         columnDefs={colDefs}
         pagination={true} 
-        paginationPageSize={10}
+        paginationPageSize={20}
         className="bg-white dark:bg-gray-800 shadow-sm rounded-xl"
       />
     </div>
