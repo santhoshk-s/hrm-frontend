@@ -6,11 +6,11 @@ import api from "../../api";
 // Thunk for logging in a data
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
-  async (userCredentials, { rejectWithValue }) => {
+  async ({ email, password }, { rejectWithValue }) => {
     try {
       const response = await api.post(
         `${BASE_URL}/auth/login`,
-        userCredentials
+        { email, password }
       );
       localStorage.setItem('token', response.data.data);
       return response.data;
@@ -44,6 +44,7 @@ const authSlice = createSlice({
     error: null,
     loginUser: { data: null,loading: false,error: null },
     logout: { data: null,loading: false,error: null },
+    registerUser: { data: null,loading: false,error: null },
   },
   reducers: {},
   extraReducers: (builder) => {

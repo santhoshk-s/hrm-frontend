@@ -6,6 +6,7 @@ const AttendanceSystem = () => {
     const [attendanceRecord, setAttendanceRecord] = useState(null);
     const [isCameraOpen, setIsCameraOpen] = useState(false);
     const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+    const [darkMode, setDarkMode] = useState(false);
     const actualArrivalTime = new Date();
     actualArrivalTime.setHours(9, 30, 0); // Set actual arrival time to 9:30 AM
 
@@ -66,9 +67,22 @@ const AttendanceSystem = () => {
         }
     };
 
+    // Toggle Dark Mode
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+    };
+
     return (
-        <div className="p-8">
+        <div className={`p-8 ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
             <h2 className="text-2xl font-bold text-center mb-6 font-serif">Selfie-Based Attendance System</h2>
+
+            {/* Dark Mode toggle */}
+            <button
+                onClick={toggleDarkMode}
+                className="bg-gray-700 text-white py-2 px-4 rounded mb-6 block mx-auto"
+            >
+                Toggle {darkMode ? 'Light' : 'Dark'} Mode
+            </button>
 
             {/* Display current time */}
             <div className="text-center text-lg mb-4">Current Time: {currentTime}</div>
@@ -76,7 +90,7 @@ const AttendanceSystem = () => {
             {/* Button to open camera */}
             <button
                 onClick={openCamera}
-                className="bg-blue-500 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded mb-4"
+                className="bg-blue-500 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded mb-4 block mx-auto"
             >
                 📸 Take Selfie
             </button>
@@ -88,7 +102,7 @@ const AttendanceSystem = () => {
                         audio={false}
                         ref={webcamRef}
                         screenshotFormat="image/jpeg"
-                        className="border border-gray-300 rounded-lg mb-4 w-80"
+                        className="border border-gray-300 rounded-lg mb-4 w-full max-w-md"
                     />
                     <div className="flex space-x-4">
                         <button
@@ -109,7 +123,7 @@ const AttendanceSystem = () => {
 
             {/* Display selfie with "Remove", "Retake" and "Verify" options */}
             {attendanceRecord && (
-                <div className="mt-8 flex flex-col items-center bg-gray-100 p-4 rounded-lg shadow-md">
+                <div className="mt-8 flex flex-col items-center bg-gray-100 p-4 rounded-lg shadow-md w-full max-w-md">
                     <img src={attendanceRecord.image} alt="Selfie" className="w-30 h-30 mb-2" />
                     <h3 className="text-lg font-semibold text-gray-700">
                         Arrival Time: {new Date(attendanceRecord.timestamp).toLocaleString()}

@@ -21,6 +21,8 @@ import AddAttendance from "./pages/AddAttendance";
 import Profile from "./pages/Profile";
 import Employeequery from "./pages/employee/Employeequery";
 import Querylist from "./pages/employee/Querylist";
+import { Provider } from 'react-redux';
+import store from './store'; // Import your Redux store
 
 
 function App() {
@@ -34,6 +36,7 @@ function App() {
 
   return (
     <>
+     <Provider store={store}>
       <Routes>
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/register" element={<RegisterPage />} />
@@ -52,6 +55,7 @@ function App() {
 
         </Route>
       </Routes>
+      </Provider>
     </>
   );
 }
