@@ -9,11 +9,11 @@ const LeaveForm = () => {
     setLeaveData();
   };
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-300">
+    <div className="flex justify-center items-center">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
         <form className="grid gap-6">
           {/* Name */}
-          <div className="flex flex-col gap-2">
+          {/* <div className="flex flex-col gap-2">
             <label
               htmlFor="name"
               className="text-sm font-semibold text-gray-700"
@@ -26,10 +26,10 @@ const LeaveForm = () => {
               type="text"
               placeholder="Enter your name"
             />
-          </div>
+          </div> */}
 
           {/* Email */}
-          <div className="flex flex-col gap-2">
+          {/* <div className="flex flex-col gap-2">
             <label
               htmlFor="email"
               className="text-sm font-semibold text-gray-700"
@@ -42,7 +42,7 @@ const LeaveForm = () => {
               type="email"
               placeholder="Enter your email"
             />
-          </div>
+          </div> */}
 
           {/* Reason */}
           <div className="flex flex-col gap-2">

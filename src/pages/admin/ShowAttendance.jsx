@@ -31,10 +31,10 @@ function ShowAttendance() {
 
   // Column Definitions: Defines the columns to be displayed.
   const [colDefs, setColDefs] = useState([
-    { field: "userName" },
-    { field: "email" },
-    { field: "arrivalDate" },
-    { field: "departureDate" },
+    { field: "userName",filter: 'agTextColumnFilter' },
+    { field: "email",filter: 'agTextColumnFilter' },
+    { field: "arrivalDate",filter: 'agTextColumnFilter' },
+    { field: "departureDate",filter: 'agTextColumnFilter' },
     { field: "remarks" }
   ]);
 
