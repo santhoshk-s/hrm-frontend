@@ -95,6 +95,37 @@ const Profile = () => {
               placeholder="Enter new password"
             />
           </div>
+ {/* position  */}
+ <div className="col-span-2 md:col-span-1">
+            <label
+              htmlFor="position"
+              className="block text-lg font-semibold mb-2"
+            >
+              Position:
+            </label>
+            <input
+              id="position"
+              className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all"
+              type="text"
+              placeholder="Enter your position"
+            />
+          </div>
+
+           {/* employeecode*/}
+           <div className="col-span-2 md:col-span-1">
+            <label
+              htmlFor="employeecode"
+              className="block text-lg font-semibold mb-2"
+            >
+              Employee Code:
+            </label>
+            <input
+              id="employeecode"
+              className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all"
+              type="text"
+              placeholder="Enter your employeecode"
+            />
+          </div>
 
           {/* Address */}
           <div className="col-span-2">
@@ -134,7 +165,7 @@ const Profile = () => {
               htmlFor="aadhar"
               className="block text-lg font-semibold mb-2"
             >
-              Aadhar Number:
+              Aadhar :
             </label>
             <input
               id="aadhar"
@@ -148,7 +179,7 @@ const Profile = () => {
           {/* Pan Number */}
           <div className="col-span-2 md:col-span-1">
             <label htmlFor="pan" className="block text-lg font-semibold mb-2">
-              Pan Number:
+              Pan :
             </label>
             <input
               id="pan"

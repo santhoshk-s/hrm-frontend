@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import Transition from '../utils/Transition';
 
 import UserAvatar from '../images/user-avatar-32.png';
@@ -7,11 +7,17 @@ import UserAvatar from '../images/user-avatar-32.png';
 function DropdownProfile({
   align
 }) {
-
+const Navigate=useNavigate()
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
+
+  const signOut = () =>{
+    localStorage.removeItem('token');
+    Navigate("/login")
+    setDropdownOpen(false)
+  }
 
   // close on click outside
   useEffect(() => {
@@ -82,13 +88,12 @@ function DropdownProfile({
               </Link>
             </li>
             <li>
-              <Link
+              <button
                 className="font-medium text-sm text-violet-500 hover:text-violet-600 dark:hover:text-violet-400 flex items-center py-1 px-3"
-                to="/signin"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
+                onClick={() => signOut()}
               >
                 Sign Out
-              </Link>
+              </button>
             </li>
           </ul>
         </div>
