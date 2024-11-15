@@ -43,11 +43,11 @@ function AuditLog() {
 
   // Column Definitions: Defines the columns to be displayed.
   const [colDefs, setColDefs] = useState([
-    { field: "userName" },
-    { field: "action" },
-    { field: "Resource" },
-    { field: "description" },
-    { field: "date" },
+    { field: "userName",filter: 'agTextColumnFilter' },
+    { field: "action",filter: 'agTextColumnFilter' },
+    { field: "Resource",filter: 'agTextColumnFilter' },
+    { field: "description",filter: 'agTextColumnFilter' },
+    { field: "date",filter: 'agDateColumnFilter' },
   ]);
 
   return (

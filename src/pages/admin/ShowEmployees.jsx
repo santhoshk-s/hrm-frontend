@@ -76,13 +76,13 @@ function ShowEmployees() {
   ]);
   const [showModel, setShowModel] = useState(false);
   const [colDefs, setColDefs] = useState([
-    { field: "userName", headerName: "User Name" },
     { field: "image", headerName: "Profile" },
-    { field: "email", headerName: "Email" },
-    { field: "mobile", headerName: "Mobile" },
-    { field: "blood", headerName: "Blood Group" },
-    { field: "pan", headerName: "PAN" },
-    { field: "skills", headerName: "Skills" },
+    { field: "userName", headerName: "User Name",filter: 'agTextColumnFilter' },
+    { field: "email", headerName: "Email",filter: 'agTextColumnFilter' },
+    { field: "mobile", headerName: "Mobile",filter: 'agNumberColumnFilter' },
+    { field: "blood", headerName: "Blood Group",filter: 'agTextColumnFilter' },
+    { field: "pan", headerName: "PAN",filter: 'agTextColumnFilter' },
+    { field: "skills", headerName: "Skills",filter: 'agTextColumnFilter' },
     {
       headerName: "Action",
       cellRenderer: (params) => <ButtonRenderer setShowModel={setShowModel} />,

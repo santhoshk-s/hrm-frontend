@@ -18,9 +18,9 @@ function LeaveList() {
   ]);
 
   const [colDefs, setColDefs] = useState([
-    { field: "Name", headerName: "Name" },
-    { field: "email", headerName: "Email" },
-    { field: "date", headerName: "Date" },
+    { field: "Name", headerName: "Name",filter: 'agTextColumnFilter' },
+    { field: "email", headerName: "Email",filter: 'agTextColumnFilter' },
+    { field: "date", headerName: "Date",filter: 'agDateColumnFilter' },
     { field: "reason", headerName: " Reason" },
     {
       headerName: "Action",
