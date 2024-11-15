@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { leaveapply } from "../../redux/slices/leaveSlice";
 
 const LeaveForm = () => {
-  const [leaveData, setLeaveData] = useState({ reson: "", dates: [] });
+  const [leaveData, setLeaveData] = useState({ reason: "", dates: [] });
+
 
   const handlechange = (e) => {
     setLeaveData();

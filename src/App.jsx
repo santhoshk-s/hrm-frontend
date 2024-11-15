@@ -20,7 +20,7 @@ import LeaveForm from "./pages/employee/LeaveForm";
 import AddAttendance from "./pages/AddAttendance";
 import Profile from "./pages/Profile";
 import Employeequery from "./pages/employee/Employeequery";
-import Querylist from "./pages/employee/Querylist";
+import Querylist from "./pages/admin/Querylist";
 import { Provider } from 'react-redux';
 import store from './redux/store'; // Import your Redux store
 import AuditLog from "./pages/admin/AuditLog";
