@@ -1,6 +1,4 @@
-// src/hooks/useAuth.js
 import { useState, useEffect } from 'react';
-import jwtDecode from 'jwt-decode';
 
 const useAuth = () => {
   const [role, setRole] = useState(null);
@@ -8,13 +6,16 @@ const useAuth = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-        setRole(decodedToken.role); // Extract the role from the token
-      } catch (error) {
-        console.error("Error decoding token", error);
-        setRole(null);
-      }
+      import('jwt-decode')
+        .then((module) => {
+          const jwtDecode = module.jwtDecode; // Access named export
+          const decodedToken = jwtDecode(token);
+          setRole(decodedToken.role);
+        })
+        .catch((error) => {
+          console.error("Error decoding token", error);
+          setRole(null);
+        });
     } else {
       setRole(null);
     }

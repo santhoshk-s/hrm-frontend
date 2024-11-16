@@ -24,13 +24,13 @@ export const leavelist = createAsyncThunk(
 
 export const leaveapply = createAsyncThunk(
     "leave/leaveapply",
-    async ({ leaveData }, { rejectWithValue }) => {
+    async ({ reason,dates }, { rejectWithValue }) => {
         try {
             const response = await api.post(
-                `${BASE_URL}/leave/apply`, leaveData
+                `${BASE_URL}/leave/apply`, { reason,dates }
 
             );
-            return response.data;
+            return response;
         } catch (error) {
             return rejectWithValue(error.response.data);
         }

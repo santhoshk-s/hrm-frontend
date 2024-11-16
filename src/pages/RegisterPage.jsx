@@ -57,7 +57,7 @@ const RegisterPage = () => {
     if (validateForm()) {
       dispatch(
         registerUser({
-          username: form.name,
+          userName: form.name,
           email: form.email,
           password: form.password,
         })
