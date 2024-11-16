@@ -8,7 +8,7 @@ const useAuth = () => {
     if (token) {
       import('jwt-decode')
         .then((module) => {
-          const jwtDecode = module.jwtDecode; // Access named export
+          const jwtDecode = module.default; // Access the default export
           const decodedToken = jwtDecode(token);
           setRole(decodedToken.role);
         })
