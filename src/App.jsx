@@ -24,6 +24,7 @@ import Querylist from "./pages/admin/Querylist";
 import { Provider } from 'react-redux';
 import store from './redux/store'; // Import your Redux store
 import AuditLog from "./pages/admin/AuditLog";
+import Welcome from "./pages/Welcome";
 
 
 
@@ -44,19 +45,18 @@ function App() {
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/register" element={<RegisterPage />} />
         <Route path="/" element={<Dashboard />}>
-          <Route index element={<Navigate to="/attendance" />} />
+          <Route index element={<Navigate to="/welcome" />} />
+          <Route path="/welcome" element={<Welcome />} />
           <Route path="/attendance" element={<ShowAttendance />} />
           <Route path="/showemployees" element={<ShowEmployees />} />
           <Route path="/interviewlist" element={<InterviewList/>}/>
           <Route path="/leavelist" element={<LeaveList/>}/>
           <Route path="/leaveform" element={<LeaveForm/>}/>
-          <Route path="/addattendance" element={<AddAttendance/>}/>
-        
+          <Route path="/add" element={<AddAttendance/>}/>
           <Route path="/profile" element={<Profile />} />
           <Route path="/employeequery" element={<Employeequery />} />
           <Route path="/querylist" element={<Querylist />} />
           <Route path="/auditlog" element={<AuditLog />} />
-
         </Route>
       </Routes>
       </Provider>

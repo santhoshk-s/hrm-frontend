@@ -10,12 +10,12 @@ import { PiCameraPlusBold } from "react-icons/pi";
 import { CgProfile } from "react-icons/cg";
 import { PiUserSoundBold } from "react-icons/pi";
 import { PiUserListFill } from "react-icons/pi";
-
+import useAuth from "../utils/useAuth";
 
 function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
   const location = useLocation();
   const { pathname } = location;
-
+  const { role } = useAuth();
   const trigger = useRef(null);
   const sidebar = useRef(null);
 
@@ -59,16 +59,13 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
     }
   }, [sidebarExpanded]);
 
-  const user = { role: "admin" };
-
   return (
     <div className="min-w-fit">
       {/* Sidebar backdrop (mobile only) */}
       <div
         className={`fixed inset-0 bg-gray-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
-        aria-hidden="true"
-      ></div>
+        aria-hidden="true"></div>
 
       {/* Sidebar */}
       <div
@@ -78,8 +75,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
           } ${variant === "v2"
             ? "border-r border-gray-200 dark:border-gray-700/60"
             : "rounded-r-2xl shadow-sm"
-          }`}
-      >
+          }`}>
         {/* Sidebar header */}
         <div className="flex justify-between mb-10 pr-3 sm:px-2">
           {/* Close button */}
@@ -88,14 +84,12 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
             className="lg:hidden text-gray-500 hover:text-gray-400"
             onClick={() => setSidebarOpen(!sidebarOpen)}
             aria-controls="sidebar"
-            aria-expanded={sidebarOpen}
-          >
+            aria-expanded={sidebarOpen}>
             <span className="sr-only">Close sidebar</span>
             <svg
               className="w-6 h-6 fill-current"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+              xmlns="http://www.w3.org/2000/svg">
               <path d="M10.7 18.7l1.4-1.4L7.8 13H20v-2H7.8l4.3-4.3-1.4-1.4L4 12z" />
             </svg>
           </button>
@@ -105,8 +99,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
               className="fill-violet-500"
               xmlns="http://www.w3.org/2000/svg"
               width={32}
-              height={32}
-            >
+              height={32}>
               <path d="M31.956 14.8C31.372 6.92 25.08.628 17.2.044V5.76a9.04 9.04 0 0 0 9.04 9.04h5.716ZM14.8 26.24v5.716C6.92 31.372.63 25.08.044 17.2H5.76a9.04 9.04 0 0 1 9.04 9.04Zm11.44-9.04h5.716c-.584 7.88-6.876 14.172-14.756 14.756V26.24a9.04 9.04 0 0 1 9.04-9.04ZM.044 14.8C.63 6.92 6.92.628 14.8.044V5.76a9.04 9.04 0 0 1-9.04 9.04H.044Z" />
             </svg>
           </NavLink>
@@ -119,8 +112,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
             <h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3">
               <span
                 className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
-                aria-hidden="true"
-              >
+                aria-hidden="true">
                 •••
               </span>
               <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
@@ -128,319 +120,28 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
               </span>
             </h3>
             <ul className="mt-3">
-              {/* attendance list */}
-              <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("attendance") &&
-                  "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                  }`}
-              >
-                <NavLink
-                  end
-                  to="/attendance"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("attendance")
-                    ? ""
-                    : "hover:text-gray-900 dark:hover:text-white"
-                    }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="grow flex items-center">
-                      <LuCalendarCheck
-                        className={`text-xl ${pathname.includes("attendance")
-                          ? "text-violet-500"
-                          : "text-gray-400 dark:text-gray-500"
-                          }`}
-                      />
-                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                        Attendance
-                      </span>
-                    </div>
-                    {/* Badge */}
-                    {/* <div className="flex flex-shrink-0 ml-2">
-                      <span className="inline-flex items-center justify-center h-5 text-xs font-medium text-white bg-violet-400 px-2 rounded">4</span>
-                    </div> */}
-                  </div>
-                </NavLink>
-              </li>
-              {/* Employees list */}
-              <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("showemployees") &&
-                  "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                  }`}
-              >
-                <NavLink
-                  end
-                  to="/showemployees"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("showemployees")
-                    ? ""
-                    : "hover:text-gray-900 dark:hover:text-white"
-                    }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="grow flex items-center">
-                      <PiUsersThreeBold
-                        className={` text-xl ${pathname.includes("showemployees")
-                          ? "text-violet-500"
-                          : "text-gray-400 dark:text-gray-500"
-                          }`}
-                      />
-                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                        All Employees
-                      </span>
-                    </div>
-                  </div>
-                </NavLink>
-              </li>
 
-              {/* interviewlist */}
+              {
+                (role === 'admin' || role === 'manager'|| role ==="hr") &&
+                <>
+                  <SideBatItem to={"attendance"} Icon={LuCalendarCheck} title={"All Attendance"} />
+                  <SideBatItem to={"showemployees"} Icon={PiUsersThreeBold} title={"All Employees"} />
+                  <SideBatItem to={"interviewlist"} Icon={FaListUl} title={"Interview List"} />
+                  <SideBatItem to={"leavelist"} Icon={FaRegCalendarXmark} title={"Leave List"} />
+                  <SideBatItem to={"querylist"} Icon={PiUserListFill} title={"Query List"} />
+                  <SideBatItem to={"auditlog"} Icon={PiUsersThreeBold} title={"Audit Log"} />
+                </>
+              }
+              {
+                role === "employee" &&
+                <>
+                  <SideBatItem to={"add"} Icon={PiCameraPlusBold} title={"Add Attendance"} />
+                  <SideBatItem to={"leaveform"} Icon={FaWpforms} title={"Leave Form"} />
+                  <SideBatItem to={"employeequery"} Icon={PiUserSoundBold} title={"Employee Query"} />
+                </>
+              }
 
-              <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("interviewlist") &&
-                  "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                  }`}
-              >
-                <NavLink
-                  end
-                  to="/interviewlist"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("interviewlist")
-                    ? ""
-                    : "hover:text-gray-900 dark:hover:text-white"
-                    }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="grow flex items-center">
-                      <FaListUl
-                        className={` text-xl ${pathname.includes("interviewlist")
-                          ? "text-violet-500"
-                          : "text-gray-400 dark:text-gray-500"
-                          }`}
-                      />
-                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                        Interview List
-                      </span>
-                    </div>
-                  </div>
-                </NavLink>
-              </li>
-
-              {/* leavelist */}
-
-              <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("leavelist") &&
-                  "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                  }`}
-              >
-                <NavLink
-                  end
-                  to="/leavelist"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("leavelist")
-                    ? ""
-                    : "hover:text-gray-900 dark:hover:text-white"
-                    }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="grow flex items-center">
-                      <FaRegCalendarXmark
-                        className={` text-xl ${pathname.includes("leavelist")
-                          ? "text-violet-500"
-                          : "text-gray-400 dark:text-gray-500"
-                          }`}
-                      />
-                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                        Leave List
-                      </span>
-                    </div>
-                  </div>
-                </NavLink>
-              </li>
-
-              {/* leave form */}
-
-              <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("leaveform") &&
-                  "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                  }`}
-              >
-                <NavLink
-                  end
-                  to="/leaveform"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("leaveform")
-                    ? ""
-                    : "hover:text-gray-900 dark:hover:text-white"
-                    }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="grow flex items-center">
-                      <FaWpforms
-                        className={` text-xl ${pathname.includes("leaveform")
-                          ? "text-violet-500"
-                          : "text-gray-400 dark:text-gray-500"
-                          }`}
-                      />
-                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                        Leave Form
-                      </span>
-                    </div>
-                  </div>
-                </NavLink>
-              </li>
-
-
-
-
-              {/* employeequey */}
-
-
-              <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("employeequery") &&
-                  "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                  }`}
-              >
-                <NavLink
-                  end
-                  to="/employeequery"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("employeequery")
-                    ? ""
-                    : "hover:text-gray-900 dark:hover:text-white"
-                    }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="grow flex items-center">
-                      <PiUserSoundBold
-                        className={` text-xl ${pathname.includes("employeequery")
-                          ? "text-violet-500"
-                          : "text-gray-400 dark:text-gray-500"
-                          }`}
-                      />
-                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                        Employee Query
-                      </span>
-                    </div>
-                  </div>
-                </NavLink>
-              </li>
-
-              {/* query list */}
-
-              <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("querylist") &&
-                  "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                  }`}
-              >
-                <NavLink
-                  end
-                  to="/querylist"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("querylist")
-                    ? ""
-                    : "hover:text-gray-900 dark:hover:text-white"
-                    }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="grow flex items-center">
-                      <PiUserListFill
-                        className={` text-xl ${pathname.includes("querylist")
-                          ? "text-violet-500"
-                          : "text-gray-400 dark:text-gray-500"
-                          }`}
-                      />
-                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                        Query List
-                      </span>
-                    </div>
-                  </div>
-                </NavLink>
-              </li>
-
-              {/*Selfi Attendances*/}
-
-              <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("leaveform") &&
-                  "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                  }`}
-              >
-                <NavLink
-                  end
-                  to="/addattendance"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("leaveform")
-                    ? ""
-                    : "hover:text-gray-900 dark:hover:text-white"
-                    }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="grow flex items-center">
-                      <PiCameraPlusBold
-                        className={` text-xl ${pathname.includes("leaveform")
-                          ? "text-violet-500"
-                          : "text-gray-400 dark:text-gray-500"
-                          }`}
-                      />
-                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                        Add-Attendance</span>
-                    </div>
-                  </div>
-                </NavLink>
-              </li>
-              {/* profile */}
-
-              <li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("profile") &&
-                  "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                  }`}
-              >
-                <NavLink
-                  end
-                  to="/profile"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("profile")
-                    ? ""
-                    : "hover:text-gray-900 dark:hover:text-white"
-                    }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="grow flex items-center">
-                      <CgProfile
-                        className={` text-xl ${pathname.includes("profile")
-                          ? "text-violet-500"
-                          : "text-gray-400 dark:text-gray-500"
-                          }`}
-                      />
-                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                        Profile
-                      </span>
-                    </div>
-                  </div>
-                </NavLink>
-              </li>
-
-{/* audit log */}
-
-<li
-                className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("auditlog") &&
-                  "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                  }`}
-              >
-                <NavLink
-                  end
-                  to="/auditlog"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes("auditlog")
-                    ? ""
-                    : "hover:text-gray-900 dark:hover:text-white"
-                    }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="grow flex items-center">
-                      <PiUsersThreeBold
-                        className={` text-xl ${pathname.includes("auditlog")
-                          ? "text-violet-500"
-                          : "text-gray-400 dark:text-gray-500"
-                          }`}
-                      />
-                      <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                        Audit Log
-                      </span>
-                    </div>
-                  </div>
-                </NavLink>
-              </li>
-
+              <SideBatItem to={"profile"} Icon={CgProfile} title={"Profile"} />
 
 
 
@@ -687,16 +388,14 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
           <div className="w-12 pl-4 pr-3 py-2">
             <button
               className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400"
-              onClick={() => setSidebarExpanded(!sidebarExpanded)}
-            >
+              onClick={() => setSidebarExpanded(!sidebarExpanded)}>
               <span className="sr-only">Expand / collapse sidebar</span>
               <svg
                 className="shrink-0 fill-current text-gray-400 dark:text-gray-500 sidebar-expanded:rotate-180"
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
-                viewBox="0 0 16 16"
-              >
+                viewBox="0 0 16 16">
                 <path d="M15 16a1 1 0 0 1-1-1V1a1 1 0 1 1 2 0v14a1 1 0 0 1-1 1ZM8.586 7H1a1 1 0 1 0 0 2h7.586l-2.793 2.793a1 1 0 1 0 1.414 1.414l4.5-4.5A.997.997 0 0 0 12 8.01M11.924 7.617a.997.997 0 0 0-.217-.324l-4.5-4.5a1 1 0 0 0-1.414 1.414L8.586 7M12 7.99a.996.996 0 0 0-.076-.373Z" />
               </svg>
             </button>
@@ -704,8 +403,40 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
         </div>
       </div>
     </div>
-
   );
 }
+
+const SideBatItem = ({ to, Icon, title }) => {
+  const location = useLocation();
+  const { pathname } = location;
+  return (
+    <li
+      className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes(to) &&
+        "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+        }`}>
+      <NavLink
+        end
+        to={`/${to}`}
+        className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes(to)
+          ? ""
+          : "hover:text-gray-900 dark:hover:text-white"
+          }`}>
+        <div className="flex items-center justify-between">
+          <div className="grow flex items-center">
+            <Icon
+              className={` text-xl ${pathname.includes(to)
+                ? "text-violet-500"
+                : "text-gray-400 dark:text-gray-500"
+                }`}
+            />
+            <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+              {title}
+            </span>
+          </div>
+        </div>
+      </NavLink>
+    </li>
+  );
+};
 
 export default Sidebar;
