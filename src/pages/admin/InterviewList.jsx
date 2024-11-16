@@ -7,7 +7,7 @@ const CandidateTable = () => {
   const [rowData, setRowData] = useState([
     {
       id: 1,
-      candidateName: "John Doe",
+      candidateName: "Muthuraja",
       candidateEmail: "john.doe@example.com",
       mobile: 1234567890,
       position: "Software Engineer",
