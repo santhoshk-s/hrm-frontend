@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
+import { useDispatch, useSelector } from "react-redux";
+import { leavelist } from "../../redux/slices/leaveSlice";
 
 function LeaveList() {
+const dispatch=useDispatch()
+const{data:getAllData,error,loading}=useSelector((state)=>state.leave.leavelist)
+
   const [rowData, setRowData] = useState([
     {
       Name: "Audi",
@@ -18,10 +23,13 @@ function LeaveList() {
   ]);
 
   const [colDefs, setColDefs] = useState([
-    { field: "Name", headerName: "Name",filter: 'agTextColumnFilter' },
-    { field: "email", headerName: "Email",filter: 'agTextColumnFilter' },
-    { field: "date", headerName: "Date",filter: 'agDateColumnFilter' },
-    { field: "reason", headerName: " Reason" },
+    { field: "userId.userName", headerName: "Name",filter: 'agTextColumnFilter' },
+    { field: "userId.email", headerName: "Email",filter: 'agTextColumnFilter' },
+    { field: "dates", headerName: "Date",filter: 'agDateColumnFilter' },
+    { field: "reason", headerName: "Reason" },
+    { field: "hrComments", headerName: "Hr Comment" },
+    { field: "managerComments", headerName: "Manager Comment" },
+    { field: "status", headerName: "Status" },
     {
       headerName: "Action",
       cellRenderer: (params) => <ButtonRenderer onClick={() => alert("rty")} />,
@@ -29,13 +37,18 @@ function LeaveList() {
     },
   ]);
 
+  useEffect(() => {
+    dispatch(leavelist())
+  }, [dispatch])
+  
+console.log(getAllData,error)
   return (
     <div className="ag-theme-quartz" style={{ height: 500 }}>
       <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
         Leave List
       </h2>
       <AgGridReact
-        rowData={rowData}
+        rowData={getAllData}
         columnDefs={colDefs}
         pagination={true}
         paginationPageSize={20}
