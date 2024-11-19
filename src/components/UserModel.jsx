@@ -1,4 +1,6 @@
 import React from "react";
+import { FaTrashAlt, FaEdit } from "react-icons/fa";
+import { IoEyeSharp } from "react-icons/io5";
 
 const UserModel = ({ user, onClose }) => {
   if (!user) return null;
@@ -39,14 +41,21 @@ const UserModel = ({ user, onClose }) => {
             <h2 className="px-2 py-2 text-gray-500 font-semibold">Blood Group</h2>
             <span className="px-2 py-2">{user.blood || "N/A"}</span>
           </div>
-          <div className="flex justify-between">
-            <h2 className="px-2 py-2 text-gray-500 font-semibold">PAN</h2>
-            <span className="px-2 py-2">{user.pan || "N/A"}</span>
-          </div>
-          <div className="flex justify-between">
-            <h2 className="px-2 py-2 text-gray-500 font-semibold">Aadhaar</h2>
-            <span className="px-2 py-2">{user.aadhar || "N/A"}</span>
-          </div>
+          <div className="space-y-4">
+  <div className="flex items-center justify-between border-b pb-2">
+    <h2 className="text-gray-500 font-medium">PAN</h2>
+    <button className=" text-white font-semibold  px-4 py-2 rounded-lg bg-blue-500 transition">
+    <IoEyeSharp size={20} />
+    </button>
+  </div>
+  <div className="flex items-center justify-between border-b pb-2">
+    <h2 className="text-gray-500 font-medium">Aadhaar</h2>
+    <button className=" text-white font-semibold  px-4 py-2 rounded-lg bg-blue-500 transition">
+    <IoEyeSharp size={20} />
+    </button>
+  </div>
+</div>
+
         </div>
       </div>
     </div>
