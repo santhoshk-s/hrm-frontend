@@ -85,6 +85,7 @@ const AttendanceSystem = () => {
                     <FaClock size={24} />
                     <span className="text-lg">{currentTime}</span>
                     {isTimerRunning && (
+
                         <button
                             className="bg-red-500 text-white px-3 py-1 rounded flex items-center space-x-1"
                             onClick={stopTimer}
