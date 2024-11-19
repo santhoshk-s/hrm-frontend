@@ -3,6 +3,7 @@ import axios from "axios";
 import { BASE_URL } from "../../constant";
 import api from "../../api";
 
+
 // Thunk for logging in a data
 export const loginUser = createAsyncThunk(
   "auth/loginUser",

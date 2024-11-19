@@ -1,8 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import bgprofile from "../images/hrmprofile.jpg"; // Default profile image
+import { getProfile, profileUpdate } from "../redux/slices/employeeSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const { data: getData, error } = useSelector(
+    (state) => state.employee.getProfile
+  );
   const [profilePic, setProfilePic] = useState(bgprofile); // State to store profile picture
+
+  const [profileData, setProfileData] = useState({
+    userName: "",
+    email: "",
+    address: "",
+    mobile: "",
+    bloodGroup: "",
+    aadhaar: null,
+    pan: null,
+    bank: null,
+    position: "",
+    empCode: "",
+    image: null,
+    imageId: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData((prevData) => ({ ...prevData, [name]: value }));
+  };
+  
+  const handlesubmit = (e) => {
+    e.preventDefault(); // Prevent default form submission
+  
+    const formData = new FormData();
+    Object.keys(profileData).forEach((key) => {
+      if (profileData[key] !== null) {
+        formData.append(key, profileData[key]);
+      }
+    });
+  
+    dispatch(profileUpdate({ formDate: formData })); // Dispatch with FormData
+  };
+  
 
   // Function to handle profile picture change
   const handleProfilePicChange = (e) => {
@@ -15,14 +56,18 @@ const Profile = () => {
       reader.readAsDataURL(file); // Read the file as a data URL
     }
   };
+  useEffect(() => {
+    dispatch(getProfile()).then(() => setProfileData({ ...getData }));
+  }, [dispatch]);
+  console.log(profileData);
 
   return (
-    <div className="flex justify-center items-center bg-gradient-to-br from-gray-100 to-gray-300 min-h-screen py-8">
-      <div className="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-4xl transition-all duration-500">
+    <div className="flex justify-center items-center min-h-screen -mt-8">
+      <div className="bg-white p-10 rounded-2xl w-full max-w-7xl transition-all duration-500">
         {/* Profile Picture Section */}
-        <div className="flex justify-center mb-6 relative">
+        <div className=" mb-6 ">
           <img
-            className="rounded-full h-32 w-32 object-cover border-4 border-gray-200 cursor-pointer transition-transform transform hover:scale-105"
+            className="rounded-full h-24 w-24 object-cover border-4 border-gray-200 cursor-pointer transition-transform transform hover:scale-105"
             src={profilePic}
             alt="profile"
             onClick={() => document.getElementById("fileInput").click()}
@@ -32,12 +77,15 @@ const Profile = () => {
             type="file"
             className="hidden"
             accept="image/*"
-            onChange={handleProfilePicChange}
+            name="image"
+            onChange={(e) =>
+              setProfileData({ ...profileData, image: e.target.files[0] })
+            }
           />
         </div>
 
         {/* Form Section */}
-        <form className="grid grid-cols-2 gap-8">
+        <form className="grid grid-cols-2 gap-8" onSubmit={handlesubmit}>
           {/* Name */}
           <div className="col-span-2 md:col-span-1">
             <label htmlFor="name" className="block text-lg font-semibold mb-2">
@@ -45,6 +93,9 @@ const Profile = () => {
             </label>
             <input
               id="name"
+              name="userName"
+              onChange={handleChange}
+              value={profileData.userName}
               className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all"
               type="text"
               placeholder="Enter your name"
@@ -58,6 +109,9 @@ const Profile = () => {
             </label>
             <input
               id="email"
+              name="email"
+              onChange={handleChange}
+              value={profileData.email}
               className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all"
               type="email"
               placeholder="Enter your email"
@@ -65,7 +119,7 @@ const Profile = () => {
           </div>
 
           {/* Old Password */}
-          <div className="col-span-2 md:col-span-1">
+          {/* <div className="col-span-2 md:col-span-1">
             <label
               htmlFor="oldPassword"
               className="block text-lg font-semibold mb-2"
@@ -78,10 +132,10 @@ const Profile = () => {
               type="password"
               placeholder="Enter old password"
             />
-          </div>
+          </div> */}
 
           {/* New Password */}
-          <div className="col-span-2 md:col-span-1">
+          {/* <div className="col-span-2 md:col-span-1">
             <label
               htmlFor="newPassword"
               className="block text-lg font-semibold mb-2"
@@ -94,9 +148,9 @@ const Profile = () => {
               type="password"
               placeholder="Enter new password"
             />
-          </div>
- {/* position  */}
- <div className="col-span-2 md:col-span-1">
+          </div> */}
+          {/* position  */}
+          <div className="col-span-2 md:col-span-1">
             <label
               htmlFor="position"
               className="block text-lg font-semibold mb-2"
@@ -105,14 +159,17 @@ const Profile = () => {
             </label>
             <input
               id="position"
+              name="position"
+              value={profileData.position}
+              onChange={handleChange}
               className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all"
               type="text"
               placeholder="Enter your position"
             />
           </div>
 
-           {/* employeecode*/}
-           <div className="col-span-2 md:col-span-1">
+          {/* employeecode*/}
+          <div className="col-span-2 md:col-span-1">
             <label
               htmlFor="employeecode"
               className="block text-lg font-semibold mb-2"
@@ -121,6 +178,9 @@ const Profile = () => {
             </label>
             <input
               id="employeecode"
+              name="empCode"
+              value={profileData.empCode}
+              onChange={handleChange}
               className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all"
               type="text"
               placeholder="Enter your employeecode"
@@ -137,6 +197,9 @@ const Profile = () => {
             </label>
             <textarea
               id="address"
+              name="address"
+              value={profileData.address}
+              onChange={handleChange}
               className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all"
               type="text"
               placeholder="Enter your address"
@@ -153,6 +216,9 @@ const Profile = () => {
             </label>
             <input
               id="bloodGroup"
+              name="bloodGroup"
+              value={profileData.bloodGroup}
+              onChange={handleChange}
               className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all"
               type="text"
               placeholder="Enter your blood group"
@@ -169,8 +235,11 @@ const Profile = () => {
             </label>
             <input
               id="aadhar"
+              name="aadhaar"
+              onChange={(e) =>
+                setProfileData({ ...profileData, aadhaar: e.target.files[0] })
+              }
               className="w-full p-3 rounded-lg border border-gray-300 transition-all"
-
               type="file"
               placeholder="Enter your Aadhar Number"
             />
@@ -183,6 +252,10 @@ const Profile = () => {
             </label>
             <input
               id="pan"
+              name="pan"
+              onChange={(e) =>
+                setProfileData({ ...profileData, pan: e.target.files[0] })
+              }
               className="w-full p-3 rounded-lg border border-gray-300 transition-all"
               type="file"
               placeholder="Enter your Pan Number"
@@ -199,6 +272,10 @@ const Profile = () => {
             </label>
             <input
               id="bankAccount"
+              name="bank"
+              onChange={(e) =>
+                setProfileData({ ...profileData, bank: e.target.files[0] })
+              }
               className="w-full p-3 rounded-lg border border-gray-300 transition-all"
               type="file"
               placeholder="Enter your Account Number"
@@ -206,7 +283,10 @@ const Profile = () => {
           </div>
           {/* Submit Button */}
           <div className="col-span-2 flex justify-center">
-            <button className="px-8 py-3 mt-8 rounded-lg bg-gradient-to-r from-green-600 to-green-500 text-white text-lg font-semibold hover:bg-gradient-to-r hover:from-green-500 hover:to-green-600 focus:outline-none shadow-md hover:shadow-lg transform transition-all hover:-translate-y-0.5">
+            <button
+              type="submit"
+              className="px-8 py-3 mt-8 rounded-lg bg-gradient-to-r from-green-600 to-green-500 text-white text-lg font-semibold hover:bg-gradient-to-r hover:from-green-500 hover:to-green-600 focus:outline-none shadow-md hover:shadow-lg transform transition-all hover:-translate-y-0.5"
+            >
               Submit
             </button>
           </div>
