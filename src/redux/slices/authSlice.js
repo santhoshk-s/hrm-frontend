@@ -13,6 +13,9 @@ export const loginUser = createAsyncThunk(
         `${BASE_URL}/auth/login`,
         { email, password }
       );
+
+    // Save token and role to localStorage
+    localStorage.setItem('role',response.data.role);
       localStorage.setItem('token', response.data.data);
       return response.data;
     } catch (error) {

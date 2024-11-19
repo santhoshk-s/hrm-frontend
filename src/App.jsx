@@ -25,6 +25,7 @@ import AuditLog from "./pages/admin/AuditLog";
 import Welcome from "./pages/Welcome";
 import { ProtectRoute } from "./partials/ProtectRoute";
 
+
 function App() {
   const location = useLocation();
 
