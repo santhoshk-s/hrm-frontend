@@ -1,33 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Webcam from 'react-webcam';
-import { FaCamera, FaMoon, FaSun, FaClock, FaStop } from 'react-icons/fa';
+import { FaCamera, FaMoon, FaSun } from 'react-icons/fa';
 
 const AttendanceSystem = () => {
     const webcamRef = useRef(null);
-    const intervalRef = useRef(null); // Ref to manage the timer
     const [attendanceRecord, setAttendanceRecord] = useState(null);
     const [isCameraOpen, setIsCameraOpen] = useState(false);
     const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
     const [darkMode, setDarkMode] = useState(false);
-    const [isTimerRunning, setIsTimerRunning] = useState(true); // Timer running state
-    const actualArrivalTime = new Date();
-    actualArrivalTime.setHours(9, 30, 0); // Set actual arrival time to 9:30 AM
 
     // Update local time every second
     useEffect(() => {
-        intervalRef.current = setInterval(() => {
+        const interval = setInterval(() => {
             setCurrentTime(new Date().toLocaleTimeString());
         }, 1000);
-        return () => clearInterval(intervalRef.current);
+        return () => clearInterval(interval);
     }, []);
-
-    // Stop the timer
-    const stopTimer = () => {
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            setIsTimerRunning(false);
-        }
-    };
 
     // Open camera view
     const openCamera = () => {
@@ -74,70 +62,58 @@ const AttendanceSystem = () => {
 
     return (
         <div
-            className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900 h-40'} ${
-                isCameraOpen || !attendanceRecord ? 'overflow-hidden' : 'overflow-auto'
+            className={`min-h-screen flex flex-col ${
+                darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'
             }`}
         >
             {/* Top Bar */}
-            <div className="flex justify-between items-center p-4">
-                {/* Current Time and Stop Button */}
-                <div className="flex items-center space-x-2">
-                    <FaClock size={24} />
+            <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg">
+                <h1 className="text-xl font-bold">Attendance System</h1>
+                <div className="flex items-center space-x-4">
                     <span className="text-lg">{currentTime}</span>
-                    {isTimerRunning && (
-
-                        <button
-                            className="bg-red-500 text-white px-3 py-1 rounded flex items-center space-x-1"
-                            onClick={stopTimer}
-                        >
-                            <FaStop />
-                            <span>Stop</span>
-                        </button>
-                    )}
+                    {/* Dark Mode Toggle */}
+                    <button
+                        className="flex items-center space-x-2 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded"
+                        onClick={toggleDarkMode}
+                    >
+                        {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
+                        <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+                    </button>
                 </div>
-
-                {/* Dark Mode Toggle */}
-                <button
-                    className="flex items-center space-x-2 bg-gray-700 text-white py-2 px-4 rounded"
-                    onClick={toggleDarkMode}
-                >
-                    {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
-                    <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
-                </button>
             </div>
 
             {/* Main Section */}
-            <div className="flex flex-col items-center justify-center min-h-screen">
+            <div className="flex flex-col items-center justify-center flex-grow">
                 {/* Add Selfie Button */}
                 {!isCameraOpen && !attendanceRecord && (
                     <button
                         onClick={openCamera}
-                        className="flex items-center justify-center bg-blue-500 hover:bg-green-500 text-white font-semibold py-4 px-8 rounded-lg shadow-lg space-x-2"
+                        className="flex items-center justify-center bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-semibold py-4 px-8 rounded-lg shadow-lg transition-all transform hover:scale-105"
                     >
                         <FaCamera size={28} />
-                        <span className="text-lg">Add Selfie</span>
+                        <span className="text-lg ml-2">Add Selfie</span>
                     </button>
                 )}
 
                 {/* Camera View */}
                 {isCameraOpen && (
-                    <div className="flex flex-col items-center">
+                    <div className="fixed inset-0 bg-gray-900 bg-opacity-90 z-50 flex items-center justify-center">
                         <Webcam
                             audio={false}
                             ref={webcamRef}
                             screenshotFormat="image/jpeg"
-                            className="border border-gray-300 rounded-lg mb-4 w-full max-w-md"
+                            className="w-full h-auto max-h-screen"
                         />
-                        <div className="flex space-x-4">
+                        <div className="absolute bottom-8 flex space-x-4">
                             <button
                                 onClick={captureImage}
-                                className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
+                                className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all"
                             >
                                 Take Shot
                             </button>
                             <button
                                 onClick={() => setIsCameraOpen(false)}
-                                className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+                                className="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all"
                             >
                                 Cancel
                             </button>
@@ -147,12 +123,12 @@ const AttendanceSystem = () => {
 
                 {/* Display Selfie */}
                 {attendanceRecord && (
-                    <div className="-mt-2 flex flex-col items-center bg-gray-100 p-4 rounded-lg shadow-md w-screen max-w-md">
-                        <img src={attendanceRecord.image} alt="Selfie" className="w-30 h-30 mb-2" />
+                    <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md max-w-md">
+                        <img src={attendanceRecord.image} alt="Selfie" className="rounded-lg mb-4 w-full h-auto" />
                         <h3 className="text-lg font-semibold text-gray-700">
                             Arrival Time: {new Date(attendanceRecord.timestamp).toLocaleString()}
                         </h3>
-                        <div className="flex space-x-4 mt-2">
+                        <div className="flex space-x-4 mt-4">
                             <button
                                 onClick={removeImage}
                                 className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
@@ -168,7 +144,9 @@ const AttendanceSystem = () => {
                             <button
                                 onClick={verifyImage}
                                 className={`${
-                                    attendanceRecord.verified ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'
+                                    attendanceRecord.verified
+                                        ? 'bg-gray-500'
+                                        : 'bg-green-500 hover:bg-green-600'
                                 } text-white font-semibold py-2 px-4 rounded`}
                                 disabled={attendanceRecord.verified}
                             >

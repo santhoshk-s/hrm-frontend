@@ -285,7 +285,7 @@ const Profile = () => {
           <div className="col-span-2 flex justify-center">
             <button
               type="submit"
-              className="px-8 py-3 mt-8 rounded-lg bg-gradient-to-r from-green-600 to-green-500 text-white text-lg font-semibold hover:bg-gradient-to-r hover:from-green-500 hover:to-green-600 focus:outline-none shadow-md hover:shadow-lg transform transition-all hover:-translate-y-0.5"
+              className="px-8 py-3 mt-8 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white text-lg font-semibold hover:bg-gradient-to-l hover:from-purple-600 hover:to-blue-500 focus:outline-none shadow-md hover:shadow-lg transform transition-all hover:-translate-y-1"
             >
               Submit
             </button>
