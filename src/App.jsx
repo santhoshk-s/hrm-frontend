@@ -22,7 +22,7 @@ import Querylist from "./pages/admin/Querylist";
 import { Provider } from "react-redux";
 import store from "./redux/store"; // Import your Redux store
 import AuditLog from "./pages/admin/AuditLog";
-import Welcome from "./pages/Welcome";
+import Home from "./pages/Home";
 import { ProtectRoute } from "./partials/ProtectRoute";
 
 
@@ -43,8 +43,8 @@ function App() {
           <Route exact path="/register" element={<RegisterPage />} />
           <Route element={<ProtectRoute />}>
             <Route path="/" element={<Dashboard />}>
-              <Route index element={<Navigate to="/welcome" />} />
-              <Route path="/welcome" element={<Welcome />} />
+              <Route index element={<Navigate to="/home" />} />
+              <Route path="/home" element={<Home />} />
               <Route path="/attendance" element={<ShowAttendance />} />
               <Route path="/showemployees" element={<ShowEmployees />} />
               <Route path="/interviewlist" element={<InterviewList />} />

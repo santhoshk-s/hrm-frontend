@@ -1,11 +1,10 @@
-import path from 'path'
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import path from 'path';
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   define: {
-    'process.env': process.env
+    'import.meta.env.VITE_BASE_URL': JSON.stringify(process.env.VITE_BASE_URL || 'http://localhost:5000'),
   },
   plugins: [react()],
   resolve: {
@@ -16,12 +15,12 @@ export default defineConfig({
   optimizeDeps: {
     include: [
       '@tailwindConfig',
-      'jwt-decode'
-    ]
-  }, 
+      'jwt-decode',
+    ],
+  },
   build: {
     commonjsOptions: {
       transformMixedEsModules: true,
-    }
-  } 
-})
+    },
+  },
+});

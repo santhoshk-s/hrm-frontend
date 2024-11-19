@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { BASE_URL } from "../../constant";
+// import { BASE_URL } from "../../constant";
 import api from "../../api";
+const BASE_URL = import.meta.env.VITE_BASE_URL
+
 
 
 
@@ -38,17 +40,19 @@ export const getOneQuery = createAsyncThunk(
 
 export const addQuery = createAsyncThunk(
     "query/addQuery",
-    async ({ query }, { rejectWithValue }) => {
-        try {
-            const response = await api.post(
-                `${BASE_URL}/query/new`, query
-            );
-            return response.data;
-        } catch (error) {
-            return rejectWithValue(error.response.data);
-        }
+    async (query, { rejectWithValue }) => {
+      try {
+        const response = await api.post(`${BASE_URL}/query/new`, query);
+        return response.data;
+      } catch (error) {
+        console.error("Add Query Error:", error.response?.data || error.message);
+        return rejectWithValue(
+          error.response?.data || { message: "Unexpected error occurred" }
+        );
+      }
     }
-);
+  );
+  
 
 // getpending query 
 
