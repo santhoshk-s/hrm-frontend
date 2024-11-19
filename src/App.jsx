@@ -5,8 +5,6 @@ import "./charts/ChartjsConfig";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 
-
-
 // Import pages
 import Dashboard from "./pages/Dashboard";
 import RegisterPage from "./pages/RegisterPage";
@@ -21,13 +19,11 @@ import AddAttendance from "./pages/AddAttendance";
 import Profile from "./pages/Profile";
 import Employeequery from "./pages/employee/Employeequery";
 import Querylist from "./pages/admin/Querylist";
-import { Provider } from 'react-redux';
-import store from './redux/store'; // Import your Redux store
+import { Provider } from "react-redux";
+import store from "./redux/store"; // Import your Redux store
 import AuditLog from "./pages/admin/AuditLog";
 import Welcome from "./pages/Welcome";
-
-
-
+import { ProtectRoute } from "./partials/ProtectRoute";
 
 function App() {
   const location = useLocation();
@@ -40,25 +36,27 @@ function App() {
 
   return (
     <>
-     <Provider store={store}>
-      <Routes>
-        <Route exact path="/login" element={<LoginPage />} />
-        <Route exact path="/register" element={<RegisterPage />} />
-        <Route path="/" element={<Dashboard />}>
-          <Route index element={<Navigate to="/welcome" />} />
-          <Route path="/welcome" element={<Welcome />} />
-          <Route path="/attendance" element={<ShowAttendance />} />
-          <Route path="/showemployees" element={<ShowEmployees />} />
-          <Route path="/interviewlist" element={<InterviewList/>}/>
-          <Route path="/leavelist" element={<LeaveList/>}/>
-          <Route path="/leaveform" element={<LeaveForm/>}/>
-          <Route path="/add" element={<AddAttendance/>}/>
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/employeequery" element={<Employeequery />} />
-          <Route path="/querylist" element={<Querylist />} />
-          <Route path="/auditlog" element={<AuditLog />} />
-        </Route>
-      </Routes>
+      <Provider store={store}>
+        <Routes>
+          <Route exact path="/login" element={<LoginPage />} />
+          <Route exact path="/register" element={<RegisterPage />} />
+          <Route element={<ProtectRoute />}>
+            <Route path="/" element={<Dashboard />}>
+              <Route index element={<Navigate to="/welcome" />} />
+              <Route path="/welcome" element={<Welcome />} />
+              <Route path="/attendance" element={<ShowAttendance />} />
+              <Route path="/showemployees" element={<ShowEmployees />} />
+              <Route path="/interviewlist" element={<InterviewList />} />
+              <Route path="/leavelist" element={<LeaveList />} />
+              <Route path="/leaveform" element={<LeaveForm />} />
+              <Route path="/add" element={<AddAttendance />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/employeequery" element={<Employeequery />} />
+              <Route path="/querylist" element={<Querylist />} />
+              <Route path="/auditlog" element={<AuditLog />} />
+            </Route>
+          </Route>
+        </Routes>
       </Provider>
     </>
   );
