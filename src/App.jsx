@@ -19,12 +19,9 @@ import AddAttendance from "./pages/AddAttendance";
 import Profile from "./pages/Profile";
 import Employeequery from "./pages/employee/Employeequery";
 import Querylist from "./pages/admin/Querylist";
-import { Provider } from "react-redux";
-import store from "./redux/store"; // Import your Redux store
 import AuditLog from "./pages/admin/AuditLog";
 import Home from "./pages/Home";
 import { ProtectRoute } from "./partials/ProtectRoute";
-
 
 function App() {
   const location = useLocation();
@@ -37,28 +34,26 @@ function App() {
 
   return (
     <>
-      <Provider store={store}>
-        <Routes>
-          <Route exact path="/login" element={<LoginPage />} />
-          <Route exact path="/register" element={<RegisterPage />} />
-          <Route element={<ProtectRoute />}>
-            <Route path="/" element={<Dashboard />}>
-              <Route index element={<Navigate to="/home" />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/attendance" element={<ShowAttendance />} />
-              <Route path="/showemployees" element={<ShowEmployees />} />
-              <Route path="/interviewlist" element={<InterviewList />} />
-              <Route path="/leavelist" element={<LeaveList />} />
-              <Route path="/leaveform" element={<LeaveForm />} />
-              <Route path="/add" element={<AddAttendance />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/employeequery" element={<Employeequery />} />
-              <Route path="/querylist" element={<Querylist />} />
-              <Route path="/auditlog" element={<AuditLog />} />
-            </Route>
+      <Routes>
+        <Route exact path="/login" element={<LoginPage />} />
+        <Route exact path="/register" element={<RegisterPage />} />
+        <Route element={<ProtectRoute />}>
+          <Route path="/" element={<Dashboard />}>
+            <Route index element={<Navigate to="/home" />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/attendance" element={<ShowAttendance />} />
+            <Route path="/showemployees" element={<ShowEmployees />} />
+            <Route path="/interviewlist" element={<InterviewList />} />
+            <Route path="/leavelist" element={<LeaveList />} />
+            <Route path="/leaveform" element={<LeaveForm />} />
+            <Route path="/add" element={<AddAttendance />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/employeequery" element={<Employeequery />} />
+            <Route path="/querylist" element={<Querylist />} />
+            <Route path="/auditlog" element={<AuditLog />} />
           </Route>
-        </Routes>
-      </Provider>
+        </Route>
+      </Routes>
     </>
   );
 }
