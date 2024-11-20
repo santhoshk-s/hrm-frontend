@@ -1,18 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { LuCalendarCheck } from "react-icons/lu";
-import SidebarLinkGroup from "./SidebarLinkGroup";
-import { PiUsersThreeBold } from "react-icons/pi";
-import { FaListUl } from "react-icons/fa";
-import { FaRegCalendarXmark } from "react-icons/fa6";
-import { FaWpforms } from "react-icons/fa6";
-import { PiCameraPlusBold } from "react-icons/pi";
 import { CgProfile } from "react-icons/cg";
-import { PiUserSoundBold } from "react-icons/pi";
-import { PiUserListFill } from "react-icons/pi";
 import useAuth from "../utils/useAuth";
-
+import {sidebarLinks} from '../sideNavLinks/SideNavLinks'
 function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
+  
   const location = useLocation();
   const { pathname } = location;
   const { role } = useAuth();
@@ -58,24 +50,26 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
       document.querySelector("body").classList.remove("sidebar-expanded");
     }
   }, [sidebarExpanded]);
-
+  const links = sidebarLinks[role] || [];
   return (
     <div className="min-w-fit">
       {/* Sidebar backdrop (mobile only) */}
       <div
-        className={`fixed inset-0 bg-gray-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
+        className={`fixed inset-0 bg-gray-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
+          sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
         aria-hidden="true"></div>
 
       {/* Sidebar */}
       <div
         id="sidebar"
         ref={sidebar}
-        className={`flex lg:!flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-white dark:bg-gray-800 p-4 transition-all duration-200 ease-in-out ${sidebarOpen ? "translate-x-0" : "-translate-x-64"
-          } ${variant === "v2"
+        className={`flex lg:!flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-white dark:bg-gray-800 p-4 transition-all duration-200 ease-in-out ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-64"
+        } ${variant === "v2"
             ? "border-r border-gray-200 dark:border-gray-700/60"
             : "rounded-r-2xl shadow-sm"
-          }`}>
+}`}>
         {/* Sidebar header */}
         <div className="flex justify-between mb-10 pr-3 sm:px-2">
           {/* Close button */}
@@ -121,31 +115,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
               </span>
             </h3>
             <ul className="mt-3">
-
-              {
-                (role === 'admin' || role === 'manager'|| role ==="hr") &&
-                <>
-                  <SideBatItem to={"attendance"} Icon={LuCalendarCheck} title={"All Attendance"} />
-                  <SideBatItem to={"showemployees"} Icon={PiUsersThreeBold} title={"All Employees"} />
-                  <SideBatItem to={"interviewlist"} Icon={FaListUl} title={"Interview List"} />
-                  <SideBatItem to={"leavelist"} Icon={FaRegCalendarXmark} title={"Leave List"} />
-                  <SideBatItem to={"querylist"} Icon={PiUserListFill} title={"Query List"} />
-                  <SideBatItem to={"auditlog"} Icon={PiUsersThreeBold} title={"Audit Log"} />
-                </>
-              }
-              {
-                role === "employee" &&
-                <>
-                  <SideBatItem to={"add"} Icon={PiCameraPlusBold} title={"Add Attendance"} />
-                  <SideBatItem to={"leaveform"} Icon={FaWpforms} title={"Leave Form"} />
-                  <SideBatItem to={"employeequery"} Icon={PiUserSoundBold} title={"Employee Query"} />
-                </>
-              }
-
-              <SideBatItem to={"profile"} Icon={CgProfile} title={"Profile"} />
-              
-              
-
+              {links.map(({ to, Icon, title }) => (
+                <SideBatItem key={to} to={to} Icon={Icon} title={title} />
+              ))}
+              <SideBatItem to="profile" Icon={CgProfile} title="Profile" />
 
               {/* Dashboard */}
 
@@ -413,23 +386,26 @@ const SideBatItem = ({ to, Icon, title }) => {
   const { pathname } = location;
   return (
     <li
-      className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes(to) &&
+      className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${
+        pathname.includes(to) &&
         "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-        }`}>
+      }`}>
       <NavLink
         end
         to={`/${to}`}
-        className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${pathname.includes(to)
-          ? ""
-          : "hover:text-gray-900 dark:hover:text-white"
-          }`}>
+        className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
+          pathname.includes(to)
+            ? ""
+            : "hover:text-gray-900 dark:hover:text-white"
+        }`}>
         <div className="flex items-center justify-between">
           <div className="grow flex items-center">
             <Icon
-              className={` text-xl ${pathname.includes(to)
-                ? "text-violet-500"
-                : "text-gray-400 dark:text-gray-500"
-                }`}
+              className={` text-xl ${
+                pathname.includes(to)
+                  ? "text-violet-500"
+                  : "text-gray-400 dark:text-gray-500"
+              }`}
             />
             <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
               {title}

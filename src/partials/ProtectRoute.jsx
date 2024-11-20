@@ -1,14 +1,24 @@
-import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
 
-// PrivateRoute checks if the user is authenticated
+import React from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import useAuth from "../utils/useAuth"; 
 
-export const ProtectRoute = () => {
-  const token = localStorage.getItem('token'); // Check if JWT exists in localStorage
-  
+export const ProtectRoute = ({ allowedRoles }) => {
+  const token = localStorage.getItem("token");
+  const { role } = useAuth();  
+
+
   if (!token) {
-    return <Navigate to="/login" />; // Redirect to login page if not authenticated
+    return <Navigate to="/login" replace />;
   }
 
-  return <Outlet />; // Render the child routes if authenticated
+
+  if (allowedRoles && !allowedRoles.includes(role)) {
+    return <Navigate to="/home" replace />; 
+  }
+
+  return <Outlet />; 
 };
+
+export default ProtectRoute;
+
