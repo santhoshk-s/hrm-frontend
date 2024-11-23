@@ -83,18 +83,18 @@ function ShowEmployees() {
 }
 
 const ButtonRenderer = ({ data, setShowModel, setSelectedUser }) => {
-  const handleClick = () => {
+  const handleShowModel = () => {
     setSelectedUser(data);
     setShowModel(true);
   };
 
   return (
     <>
-      <button onClick={handleClick}>
-        <IoEyeSharp size={20} />
+      <button onClick={handleShowModel}>
+        <IoEyeSharp size={20} className="absolute text-blue-600 top-[12px]"/>
       </button>
       <button className="ml-3">
-        <FaTrashAlt size={16} />
+        <FaTrashAlt size={16}  className="absolute text-red-600 top-[13px] left-[50px]" />
       </button>
     </>
   );
@@ -108,7 +108,7 @@ const EditButtonRenderer = ({ data, setShowEditForm, setSelectedUser }) => {
 
   return (
     <button onClick={handleEditClick}>
-      <FaEdit size={20} />
+      <FaEdit size={20}  className="absolute text-green-600 top-[12px] ml-[30%]"/>
     </button>
   );
 };
