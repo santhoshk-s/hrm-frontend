@@ -1,67 +1,118 @@
-import React, { useState } from "react";
-import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AgGridReact } from "ag-grid-react";
+import { IoEyeSharp } from "react-icons/io5";
+import { getAllQuery } from "../../redux/slices/querySlice";
 
 const Querylist = () => {
+  const dispatch = useDispatch();
+  const queryData = useSelector((state) => state.query.getAllQuery.data);
+
   const [rowData, setRowData] = useState([]);
+  const [selectedQuery, setSelectedQuery] = useState(null); // To store selected query details
+  const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility state
+
   const [colDefs, setColDefs] = useState([
-    { field: "userName", headerName: "User Name",filter: 'agTextColumnFilter' },
-    { field: "email", headerName: "Email",filter: 'agTextColumnFilter' },
-    { field: "mobile", headerName: "Subject",filter: 'agTextColumnFilter' },
-    { field: "blood", headerName: "Query",filter: 'agTextColumnFilter' },
-    { field: "pan", headerName: "Response",filter: 'agTextColumnFilter' },
-    { field: "skills", headerName: "Status",filter: 'agTextColumnFilter' },
     {
-      headerName: "Action",
-      cellRenderer: (params) => <ButtonRenderer toggleTextarea={toggleTextarea} />,
-      width: 250,
+      field: "userId.userName",
+      headerName: "User Name",
+      filter: "agTextColumnFilter",
+      valueGetter: (params) => params.data.userId?.userName || "N/A",
+    },
+    {
+      field: "userId.email",
+      headerName: "Email",
+      filter: "agTextColumnFilter",
+      valueGetter: (params) => params.data.userId?.email || "N/A",
+      width: 300,
+    },
+    { field: "subject", headerName: "Subject", filter: "agTextColumnFilter", width: 300, },
+    {
+      headerName: "Query",
+      cellRenderer: (params) => (
+        <div onClick={() => handleQueryDetails(params.data)}> 
+        <IoEyeSharp
+          className="absolute text-blue-600 text-lg cursor-pointer ml-[30%] mt-[13px]"
+        />
+        </div>
+      ),
+      width: 100,
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      filter: "agTextColumnFilter",
+      valueGetter: (params) =>
+        params.data.status ? "Resolved" : "Pending",
     },
   ]);
 
+  useEffect(() => {
+    dispatch(getAllQuery());
+  }, [dispatch]);
 
+  useEffect(() => {
+    if (queryData && Array.isArray(queryData)) {
+      setRowData(queryData);
+    }
+  }, [queryData]);
 
+  const handleQueryDetails = (query) => {
+    setSelectedQuery(query);
+    setIsModalVisible(true);
+  };
 
-  const [isTextareaVisible, setIsTextareaVisible] = useState(false);
-  const toggleTextarea = () => {
-    setIsTextareaVisible(!isTextareaVisible);
+  const closeModal = () => {
+    setIsModalVisible(false);
+    setSelectedQuery(null);
   };
 
   return (
     <>
-      <div hidden={isTextareaVisible} className="container mx-auto overflow-x-auto rounded-lg shadow-lg">
-      <div
-        className="ag-theme-quartz"
-        style={{ height: 500 }}
-      >
-        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
-          All Employees
-        </h2>
-        <AgGridReact
-          rowData={rowData}
-          columnDefs={colDefs}
-          pagination={true}
-          paginationPageSize={20}
-          className="bg-white dark:bg-gray-800 shadow-sm rounded-xl"
-        />
+      <div className="container mx-auto overflow-x-auto rounded-lg shadow-lg">
+        <div className="ag-theme-quartz" style={{ height: 500 }}>
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
+            All Queries
+          </h2>
+          <AgGridReact
+            rowData={rowData}
+            columnDefs={colDefs}
+            pagination={true}
+            paginationPageSize={20}
+            className="bg-white dark:bg-gray-800 shadow-sm rounded-xl"
+          />
+        </div>
       </div>
-      </div>
-      {isTextareaVisible && (
-        <div className=" w-full h-[80vh] grid place-content-center ">
-          <div className="flex flex-col items-center p-8 bg-gray-50 rounded-lg shadow-lg w-[400px] mx-auto">
-            <textarea
-              id="comments"
-              placeholder="Enter your comments..."
-              className="w-full h-40 p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all resize-none placeholder-gray-400 text-gray-700 mb-4"
-            ></textarea>
 
-            <div className="flex justify-between w-full">
-              <button className="px-8 py-3 rounded-lg bg-gradient-to-r from-green-600 to-green-500 text-white text-lg font-semibold hover:bg-gradient-to-l hover:from-green-500 hover:to-green-600 focus:outline-none shadow-md hover:shadow-lg transform transition-all hover:-translate-y-0.5">
-                Submit
-              </button>
+      {isModalVisible && selectedQuery && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white w-[400px] p-6 rounded-lg shadow-lg">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Query Details
+            </h3>
+            <p>
+              <strong>User Name:</strong> {selectedQuery.userId?.userName || "N/A"}
+            </p>
+            <p>
+              <strong>Email:</strong> {selectedQuery.userId?.email || "N/A"}
+            </p>
+            <p>
+              <strong>Subject:</strong> {selectedQuery.subject || "N/A"}
+            </p>
+            <p>
+              <strong>Query:</strong> {selectedQuery.query || "N/A"}
+            </p>
+            <p>
+              <strong>Status:</strong>{" "}
+              {selectedQuery.status ? "Resolved" : "Pending"}
+            </p>
+
+            <div className="flex justify-end mt-4">
               <button
-                className="px-8 py-3 rounded-lg bg-gradient-to-r from-red-600 to-red-500 text-white text-lg font-semibold hover:bg-gradient-to-l hover:from-red-500 hover:to-red-600 focus:outline-none shadow-md hover:shadow-lg transform transition-all hover:-translate-y-0.5"
-                onClick={toggleTextarea}
+                className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                onClick={closeModal}
               >
-                close
+                Close
               </button>
             </div>
           </div>
@@ -71,17 +122,4 @@ const Querylist = () => {
   );
 };
 
-const ButtonRenderer = ({ toggleTextarea }) => {
-  const handleClick = () => {
-    toggleTextarea(true);
-  };
-  return (
-    <>
-      <button className="btn bg-green-800 text-white" onClick={toggleTextarea}>
-        Reply
-      </button>
-      {/* <button className="btn bg-red-800 ml-2">Delete</button> */}
-    </>
-  );
-};
 export default Querylist;
