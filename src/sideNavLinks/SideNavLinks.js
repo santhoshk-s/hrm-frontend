@@ -32,6 +32,8 @@ export const sidebarLinks = {
     { to: "leavelist", Icon: FaRegCalendarXmark, title: "Leave List" },
     { to: "querylist", Icon: PiUserListFill, title: "Query List" },
     { to: "auditlog", Icon: PiUsersThreeBold, title: "Audit Log" },
+    { to: "candidatetables", Icon: PiUsersThreeBold, title: "Candidate Tables" },
+
   ],
   employee: [
     { to: "add", Icon: PiCameraPlusBold, title: "Add Attendance" },

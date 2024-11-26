@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import { BASE_URL } from "../../constant";
 import api from "../../api";
 const BASE_URL = import.meta.env.VITE_BASE_URL
-
+import { notification } from "antd";
 
 
 
@@ -40,12 +40,20 @@ export const getOneQuery = createAsyncThunk(
 
 export const addQuery = createAsyncThunk(
     "query/addQuery",
-    async (query, { rejectWithValue }) => {
+    async (queryData, { rejectWithValue }) => {
       try {
-        const response = await api.post(`${BASE_URL}/query/new`, query);
+        const response = await api.post(`${BASE_URL}/query/new`, queryData);
+        notification.success({
+            message: "Success",
+            description: response.data.message ,
+          });
         return response.data;
       } catch (error) {
         console.error("Add Query Error:", error.response?.data || error.message);
+        notification.error({
+            message: "Error",
+            description: errorMessage,
+          });
         return rejectWithValue(
           error.response?.data || { message: "Unexpected error occurred" }
         );

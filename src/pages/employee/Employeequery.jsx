@@ -16,25 +16,26 @@ const EmployeeQuery = () => {
       [id]: value,
     }));
   };
+  console.log(formData)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const queryData = { subject: formData.subject, query: formData.comments };  
     try {
       await dispatch(addQuery(queryData));
-      notification.success({
-        message: "Query Submitted",
-        description: "Your query has been successfully submitted.",
-        placement: "top",
-      });
+      // notification.success({
+      //   message: "Query Submitted",
+      //   description: "Your query has been successfully submitted.",
+      //   placement: "top",
+      // });
       setFormData({ subject: "", comments: "" });
     } catch (error) {
       console.error("Query Submission Error:", error);
-      notification.error({
-        message: "Submission Failed",
-        description: error.message || "There was an issue with your submission.",
-        placement: "top",
-      });
+      // notification.error({
+      //   message: "Submission Failed",
+      //   description: error.message || "There was an issue with your submission.",
+      //   placement: "top",
+      // });
     }
   };
   
