@@ -60,7 +60,7 @@ const RegisterPage = () => {
           userName: form.name,
           email: form.email,
           password: form.password,
-        })
+        })  
       ).then(()=>{
         navigate("/login")
       })

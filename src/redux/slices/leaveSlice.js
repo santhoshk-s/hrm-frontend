@@ -26,6 +26,7 @@ export const leavelist = createAsyncThunk(
 export const leaveapply = createAsyncThunk(
     "leave/leaveapply",
     async ({ reason,dates }, { rejectWithValue }) => {
+        console.log(reason,dates)
         try {
             const response = await api.post(
                 `${BASE_URL}/leave/apply`, { reason,dates }
@@ -38,6 +39,7 @@ export const leaveapply = createAsyncThunk(
     }
 );
 
+
 // leave approve
 
 
@@ -46,6 +48,7 @@ export const leaveapprove = createAsyncThunk(
     async ({ id, managerComments, hrComments }, { rejectWithValue }) => {
         try {
             const response = await api.put(
+               
                 `${BASE_URL}/leave/approve/${id}`, { managerComments, hrComments }
 
             );
@@ -113,15 +116,18 @@ export const getAllLeaves = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const response = await api.get(
+                
                 `${BASE_URL}/leave/all`
 
             );
+            console.log(response.data)
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
         }
     }
 );
+
 
 //get one 
 
@@ -188,7 +194,9 @@ const leaveSlice = createSlice({
             .addCase(leavelist.fulfilled, (state, action) => {
                 state.leavelist.loading = false;
                 state.leavelist.data = action.payload.data;
+
             })
+            
             .addCase(leavelist.rejected, (state, action) => {
                 state.leavelist.loading = false;
                 state.leavelist.error = action.payload;
@@ -202,6 +210,7 @@ const leaveSlice = createSlice({
             })
             .addCase(leaveapply.fulfilled, (state, action) => {
                 state.leaveapply.loading = false;
+
                 state.leaveapply.data = action.payload.data;
             })
             .addCase(leaveapply.rejected, (state, action) => {

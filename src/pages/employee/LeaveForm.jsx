@@ -28,13 +28,14 @@ const LeaveForm = () => {
       });
     }
   };
+  console.log(data)
 
   // Function to remove a date from the selected dates array
   const removeDate = (dateToRemove) => {
     setLeaveData((prevData) => ({
       ...prevData,
       dates: prevData.dates.filter((date) => date !== dateToRemove),
-    }));
+    }));  
   };
 
   const handlesubmit = (e) => {
