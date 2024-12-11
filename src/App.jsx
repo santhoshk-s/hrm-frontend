@@ -22,6 +22,11 @@ import Querylist from "./pages/admin/Querylist";
 import AuditLog from "./pages/admin/AuditLog";
 import Home from "./pages/Home";
 import { ProtectRoute } from "./partials/ProtectRoute";
+import TaskList from "./pages/admin/TaskList";
+import TaskForm from "./pages/employee/TaskForm";
+import ResumeAnalyzer from './pages/admin/ResumeAnalyzer';
+
+
 
 function App() {
   const location = useLocation();
@@ -50,7 +55,13 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/employeequery" element={<Employeequery />} />
             <Route path="/querylist" element={<Querylist />} />
+
             <Route path="/auditlog" element={<AuditLog />} />
+            <Route path="/tasklist" element={<TaskList />} />
+            <Route path="/taskform" element={<TaskForm/>} />
+            <Route path="/resumeanalyzer" element={<ResumeAnalyzer/>} />
+
+
           </Route>
         </Route>
       </Routes>

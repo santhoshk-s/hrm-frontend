@@ -6,6 +6,8 @@ import attendanceReducer from './slices/attendanceSlice';
 import employeeReducer from './slices/employeeSlice';
 import interviewReducer from './slices/interview';
 import queryReducer from './slices/querySlice';
+import taskReducer from './slices/taskSlice';
+
 
 
 const store = configureStore({
@@ -17,6 +19,7 @@ const store = configureStore({
     employee:employeeReducer,
     interview:interviewReducer,
     query:queryReducer,
+    task:taskReducer,
   },
 });
 

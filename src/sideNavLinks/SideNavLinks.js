@@ -17,6 +17,10 @@ export const sidebarLinks = {
     { to: "leavelist", Icon: FaRegCalendarXmark, title: "Leave List" },
     { to: "querylist", Icon: PiUserListFill, title: "Query List" },
     { to: "auditlog", Icon: PiUsersThreeBold, title: "Audit Log" },
+    { to: "Tasklist", Icon: PiUserListFill, title: "Task List" },
+    { to: "ResumeAnalyzer", Icon: PiUserListFill, title: "ResumeAnalyzer" },
+    
+
   ],
   manager: [
     { to: "attendance", Icon: LuCalendarCheck, title: "All Attendance" },
@@ -24,6 +28,8 @@ export const sidebarLinks = {
     { to: "interviewlist", Icon: FaListUl, title: "Interview List" },
     { to: "leavelist", Icon: FaRegCalendarXmark, title: "Leave List" },
     { to: "querylist", Icon: PiUserListFill, title: "Query List" },
+    { to: "Tasklist", Icon: PiUserListFill, title: "Task List" },
+
   ],
   hr: [
     { to: "attendance", Icon: LuCalendarCheck, title: "All Attendance" },
@@ -32,10 +38,19 @@ export const sidebarLinks = {
     { to: "leavelist", Icon: FaRegCalendarXmark, title: "Leave List" },
     { to: "querylist", Icon: PiUserListFill, title: "Query List" },
     { to: "auditlog", Icon: PiUsersThreeBold, title: "Audit Log" },
+    { to: "Tasklist", Icon: PiUserListFill, title: "Task List" },
+    { to: "Taskform", Icon: PiUserListFill, title: "Task form" },
+    { to: "ResumeAnalyzer", Icon: PiUserListFill, title: "ResumeAnalyzer" },
+
+
+
   ],
   employee: [
     { to: "add", Icon: PiCameraPlusBold, title: "Add Attendance" },
     { to: "leaveform", Icon: FaWpforms, title: "Leave Form" },
     { to: "employeequery", Icon: PiUserSoundBold, title: "Employee Query" },
+    { to: "Tasklist", Icon: PiUserListFill, title: "Task List" },
+    { to: "Taskform", Icon: PiUserListFill, title: "Task form" },
+
   ],
 };

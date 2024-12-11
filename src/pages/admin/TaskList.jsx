@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AgGridReact } from "ag-grid-react";
 import { IoEyeSharp } from "react-icons/io5";
-import { getAllQuery } from "../../redux/slices/querySlice";
 
-const Querylist = () => {
+import { getAllTask } from './../../redux/slices/taskSlice';
+
+
+
+
+
+const TaskList = () => {
   const dispatch = useDispatch();
-  const queryData = useSelector((state) => state.query.getAllQuery.data);
+  const taskData = useSelector((state) => state.task.getAllTask.data);
 
   const [rowData, setRowData] = useState([]);
-  const [selectedQuery, setSelectedQuery] = useState(null); // To store selected query details
+  const [selectedTaskList, setSelectedTaskList] = useState(null); // To store selected query details
   const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility state
 
   const [colDefs, setColDefs] = useState([
@@ -28,7 +33,7 @@ const Querylist = () => {
     },
     { field: "subject", headerName: "Subject", filter: "agTextColumnFilter", width: 300, },
     {
-      headerName: "Query",
+      headerName: "TaskList",
       cellRenderer: (params) => (
         <div onClick={() => handleQueryDetails(params.data)}> 
         <IoEyeSharp
@@ -48,17 +53,17 @@ const Querylist = () => {
   ]);
 
   useEffect(() => {
-    dispatch(getAllQuery());
+    dispatch(getAllTask());
   }, [dispatch]);
 
   useEffect(() => {
-    if (queryData && Array.isArray(queryData)) {
-      setRowData(queryData);
+    if (taskData && Array.isArray(taskData)) {
+      setRowData(taskData);
     }
-  }, [queryData]);
+  }, [taskData]);
 
-  const handleQueryDetails = (query) => {
-    setSelectedQuery(query);
+  const handleQueryDetails = (task) => {
+    setSelectedAllTask(task);
     setIsModalVisible(true);
   };
 
@@ -72,7 +77,7 @@ const Querylist = () => {
       <div className="container mx-auto overflow-x-auto rounded-lg shadow-lg">
         <div className="ag-theme-quartz" style={{ height: 500 }}>
           <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
-            All Queries
+            All TaskList
           </h2>
           <AgGridReact
             rowData={rowData}
@@ -84,27 +89,27 @@ const Querylist = () => {
         </div>
       </div>
 
-      {isModalVisible && selectedQuery && (
+      {isModalVisible && selectedTask && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white w-[400px] p-6 rounded-lg shadow-lg">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">
-              Query Details
+                Task List
             </h3>
             <p>
-              <strong>User Name:</strong> {selectedQuery.userId?.userName || "N/A"}
+              <strong>Emp Name:</strong> {selectedTask.userId?.userName || "N/A"}
             </p>
             <p>
-              <strong>Email:</strong> {selectedQuery.userId?.email || "N/A"}
+              <strong>Email:</strong> {selectedTask.userId?.email || "N/A"}
             </p>
             <p>
-              <strong>Subject:</strong> {selectedQuery.subject || "N/A"}
+              <strong>Subject:</strong> {selectedTask.subject || "N/A"}
             </p>
             <p>
-              <strong>Query:</strong> {selectedQuery.query || "N/A"}
+              <strong>Task:</strong> {selectedTask.task || "N/A"}
             </p>
-          <p>
+            <p>
               <strong>Status:</strong>{" "}
-              {selectedQuery.status ? "Resolved" : "Pending"}
+              {selectedTask.status ? "Resolved" : "Pending"}
             </p>
 
             <div className="flex justify-end mt-4">
@@ -122,4 +127,4 @@ const Querylist = () => {
   );
 };
 
-export default Querylist;
+export default TaskList;
