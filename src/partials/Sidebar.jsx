@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import { CgProfile } from "react-icons/cg";
-import useAuth from "../utils/useAuth";
-import {sidebarLinks} from '../sideNavLinks/SideNavLinks'
+import React, { useEffect, useRef, useState } from 'react';
+import { CgProfile } from 'react-icons/cg';
+import { NavLink, useLocation } from 'react-router-dom';
+
+import { sidebarLinks } from '../sideNavLinks/SideNavLinks';
+import useAuth from '../utils/useAuth';
+
 function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
   
   const location = useLocation();
@@ -122,7 +124,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, variant = "default" }) {
 
               {/* Dashboard */}
 
-              {/* <SidebarLinkGroup activecondition={pathname === "/gh" || pathname.includes("dashboard")}>
+             {/* <SidebarLinkGroup activecondition={pathname === "/gh" || pathname.includes("dashboard")}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
