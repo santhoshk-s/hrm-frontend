@@ -22,6 +22,7 @@ import Querylist from "./pages/admin/Querylist";
 import AuditLog from "./pages/admin/AuditLog";
 import Home from "./pages/Home";
 import { ProtectRoute } from "./partials/ProtectRoute";
+import EmployeeDetail from "./pages/admin/EmployeeDetail";
 
 function App() {
   const location = useLocation();
@@ -45,6 +46,7 @@ function App() {
             <Route path="/showemployees" element={<ShowEmployees />} />
             <Route path="/interviewlist" element={<InterviewList />} />
             <Route path="/candidatetables" element={<CandidateTables />} />
+            <Route path="/EmployeeDetail" element={<EmployeeDetail />} />
 
             <Route path="/leavelist" element={<LeaveList />} />
             <Route path="/leaveform" element={<LeaveForm />} />
