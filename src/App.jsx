@@ -21,6 +21,7 @@ import Employeequery from "./pages/employee/Employeequery";
 import Querylist from "./pages/admin/Querylist";
 import AuditLog from "./pages/admin/AuditLog";
 import Home from "./pages/Home";
+import Holidays from "./pages/employee/Holidays";
 import { ProtectRoute } from "./partials/ProtectRoute";
 import EmployeeDetail from "./pages/admin/EmployeeDetail";
 
@@ -48,6 +49,7 @@ function App() {
             <Route path="/candidatetables" element={<CandidateTables />} />
             <Route path="/EmployeeDetail" element={<EmployeeDetail />} />
 
+            <Route path="/Holidays" element={<Holidays />} />
             <Route path="/leavelist" element={<LeaveList />} />
             <Route path="/leaveform" element={<LeaveForm />} />
             <Route path="/add" element={<AddAttendance />} />

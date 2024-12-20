@@ -1,54 +1,88 @@
 import React, { useState } from "react";
-import { leaveapply } from "../../redux/slices/leaveSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { notification } from "antd"; // Import Ant Design notification
+import { notification, Modal } from "antd";
+import { leaveapply } from "../../redux/slices/leaveSlice";
 
-const LeaveForm = () => {
+const LeaveForm = ({ updateLeaveBalances }) => {
   const dispatch = useDispatch();
-  const { data, error, loading } = useSelector(
-    (state) => state.leave.leaveapply
-  );
-  const [leaveData, setLeaveData] = useState({ reason: "", dates: [] });
+  const { data, error, loading } = useSelector((state) => state.leave.leaveapply);
 
-  // Handle change for text input and textarea
-  const handlechange = (e) => {
+  // Leave balances managed in state
+  const [leaveBalances, setLeaveBalances] = useState({
+    total: 24,
+    sick: 12,
+    casual: 12,
+  });
+
+  const [leaveData, setLeaveData] = useState({
+    startDate: "",
+    endDate: "",
+    assignedTo: "",
+    reason: "",
+    leaveType: "",
+  });
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalContent, setModalContent] = useState("");
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "dates") {
-      // If date is already selected, avoid adding it again
-      if (!leaveData.dates.includes(value)) {
-        setLeaveData((prevData) => ({
-          ...prevData,
-          dates: [...prevData.dates, value],
-        }));
-      }
-    } else {
-      setLeaveData({
-        ...leaveData,
-        [name]: value,
-      });
-    }
-  };
-  console.log(data)
-
-  // Function to remove a date from the selected dates array
-  const removeDate = (dateToRemove) => {
-    setLeaveData((prevData) => ({
-      ...prevData,
-      dates: prevData.dates.filter((date) => date !== dateToRemove),
-    }));  
-  };
-
-  const handlesubmit = (e) => {
-    e.preventDefault();
-    dispatch(
-      leaveapply({ reason: leaveData.reason, dates: leaveData.dates })
-    ).then(() => {
-      setLeaveData({ reason: "", dates: [] });
-      showNotification(); // Show notification on successful submission
+    setLeaveData({
+      ...leaveData,
+      [name]: value,
     });
   };
 
-  // Ant Design notification
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!leaveData.leaveType) {
+      notification.error({
+        message: "Leave Type Required",
+        description: "Please select a leave type.",
+      });
+      return;
+    }
+
+    if (leaveBalances[leaveData.leaveType] > 0) {
+      dispatch(
+        leaveapply({
+          startDate: leaveData.startDate,
+          endDate: leaveData.endDate,
+          assignedTo: leaveData.assignedTo,
+          reason: leaveData.reason,
+          leaveType: leaveData.leaveType,
+        })
+      ).then(() => {
+        // Update leave balance
+        setLeaveBalances((prevBalances) => ({
+          ...prevBalances,
+          [leaveData.leaveType]: prevBalances[leaveData.leaveType] - 1,
+          total: prevBalances.total - 1,
+        }));
+
+        setLeaveData({
+          startDate: "",
+          endDate: "",
+          assignedTo: "",
+          reason: "",
+          leaveType: "",
+        });
+
+        showNotification();
+        updateLeaveBalances({
+          [leaveData.leaveType]: leaveBalances[leaveData.leaveType] - 1,
+          total: leaveBalances.total - 1,
+        });
+      });
+    } else {
+      notification.error({
+        message: "Insufficient Balance",
+        description: `No ${leaveData.leaveType} leaves left.`,
+      });
+    }
+  };
+
   const showNotification = () => {
     notification.success({
       message: "Request Sent",
@@ -57,89 +91,145 @@ const LeaveForm = () => {
     });
   };
 
+  const handleView = (type) => {
+    setModalContent(
+      `Details for ${type.charAt(0).toUpperCase() + type.slice(1)} Leave`
+    );
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
   return (
-    <div className="min-h-[60vh] flex justify-center px-4 sm:px-6 lg:px-8">
+    <div className="min-h-[80vh] flex flex-col justify-center px-4 sm:px-6 lg:px-8">
+      {/* Leave Balances */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {Object.entries(leaveBalances).map(([key, value]) => (
+          <div key={key} className={`bg-white text-black p-6 rounded-lg shadow-lg`}>
+            <h3 className="text-lg font-semibold capitalize">{key} Leave</h3>
+            <p className="text-2xl font-bold">{value} days</p>
+            {key !== "total" && (
+              <button
+                onClick={() => handleView(key)}
+                className="mt-4 px-4 py-2 rounded-lg bg-gray-800 text-white font-semibold hover:bg-gray-700 transition"
+              >
+                View
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Leave Application Form */}
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-full">
         <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-          Leave Request Form
+          Leave Application Form
         </h2>
-        <form onSubmit={handlesubmit} className="grid gap-6">
+        <form onSubmit={handleSubmit} className="grid gap-6">
+          {/* Leave Type */}
+          <div className="flex flex-col gap-2">
+            <label htmlFor="leaveType" className="text-sm font-semibold text-gray-700">
+              Leave Type:
+            </label>
+            <select
+              id="leaveType"
+              name="leaveType"
+              value={leaveData.leaveType}
+              onChange={handleChange}
+              className="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
+              required
+            >
+              <option value="">Select leave type</option>
+              <option value="sick">Sick Leave</option>
+              <option value="casual">Casual Leave</option>
+            </select>
+          </div>
+
+          {/* Start Date */}
+          <div className="flex flex-col gap-2">
+            <label htmlFor="startDate" className="text-sm font-semibold text-gray-700">
+              Start Date:
+            </label>
+            <input
+              id="startDate"
+              name="startDate"
+              value={leaveData.startDate}
+              onChange={handleChange}
+              className="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
+              type="date"
+              required
+            />
+          </div>
+
+          {/* End Date */}
+          <div className="flex flex-col gap-2">
+            <label htmlFor="endDate" className="text-sm font-semibold text-gray-700">
+              End Date:
+            </label>
+            <input
+              id="endDate"
+              name="endDate"
+              value={leaveData.endDate}
+              onChange={handleChange}
+              className="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
+              type="date"
+              required
+            />
+          </div>
+
+          {/* Assign Work */}
+          <div className="flex flex-col gap-2">
+            <label htmlFor="assignedTo" className="text-sm font-semibold text-gray-700">
+              Assign Work To:
+            </label>
+            <select
+              id="assignedTo"
+              name="assignedTo"
+              value={leaveData.assignedTo}
+              onChange={handleChange}
+              className="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
+              required
+            >
+              <option value="">Select a colleague</option>
+              <option value="John Doe">John Doe</option>
+              <option value="Jane Smith">Jane Smith</option>
+              <option value="Mark Johnson">Mark Johnson</option>
+            </select>
+          </div>
+
           {/* Reason */}
           <div className="flex flex-col gap-2">
-            <label
-              htmlFor="reason"
-              className="text-sm font-semibold text-gray-700"
-            >
+            <label htmlFor="reason" className="text-sm font-semibold text-gray-700">
               Reason:
             </label>
             <textarea
               id="reason"
               name="reason"
               value={leaveData.reason}
-              onChange={handlechange}
+              onChange={handleChange}
               className="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
               placeholder="Enter your reason"
               rows="4"
               required
-              aria-label="Reason for leave"
             />
           </div>
-
-          {/* Date */}
-          <div className="flex flex-col gap-2">
-            <label
-              htmlFor="dates"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Date:
-            </label>
-            <input
-              id="dates"
-              name="dates"
-              onChange={handlechange}
-              className="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
-              type="date"
-              required
-              aria-label="Select a date"
-            />
-          </div>
-
-          {/* Selected Dates */}
-          {leaveData.dates.length > 0 && (
-            <div className="flex flex-col gap-2">
-              <p className="text-sm font-semibold text-gray-700">
-                Selected Dates:
-              </p>
-              <div className="flex gap-2 flex-wrap">
-                {leaveData.dates.map((date, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-2 bg-gray-200 p-2 rounded-md"
-                  >
-                    <span className="text-gray-800">{date}</span>
-                    <button
-                      type="button"
-                      onClick={() => removeDate(date)}
-                      className="text-red-500 font-bold hover:text-red-700"
-                      aria-label={`Remove date ${date}`}
-                    >
-                      &times;
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* Submit Button */}
           <button
             type="submit"
             className="w-full py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white text-lg font-semibold hover:bg-gradient-to-l hover:from-purple-600 hover:to-blue-500 focus:outline-none shadow-md hover:shadow-lg transform transition-all hover:-translate-y-1"
           >
-            Submit
+            Submit Application
           </button>
         </form>
       </div>
+
+      {/* Modal for View Details */}
+      <Modal title="Leave Details" visible={isModalVisible} onCancel={closeModal} footer={null}>
+        <p>{modalContent}</p>
+      </Modal>
     </div>
   );
 };
